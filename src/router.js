@@ -1,9 +1,11 @@
 import { HomeView } from "./views/HomeView.js";
 import { NotfoundView } from "./views/NotFoundView.js";
+import { LoginView } from "./views/LoginView.js";
 
 export function router() {
   const routes = {
     "#/": HomeView,
+    "#/login": LoginView,
     // legg til fleire etter kvart
   };
 
