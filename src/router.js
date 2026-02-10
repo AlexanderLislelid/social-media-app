@@ -10,7 +10,6 @@ export function router() {
     "#/login": LoginView,
     "#/register": RegisterView,
     "#/profile": ProfileView,
-    // legg til fleire etter kvart
   };
 
   function handleRoute() {

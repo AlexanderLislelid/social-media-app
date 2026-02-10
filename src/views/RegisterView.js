@@ -5,7 +5,7 @@ export function RegisterView() {
     <section>
       <p>name: my_username</p>
       <p>email": "first.last@stud.noroff.no</p>
-      <p>password": eXaMpLe1375</p>
+      <p>password": your-password</p>
       <form id="registerForm">
         <input id="name" type="text" placeholder="Name" required />
         <input id="email" type="email" placeholder="Email" required />
