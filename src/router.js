@@ -12,11 +12,11 @@ export function router() {
     "#/profile": ProfileView,
   };
 
-  function handleRoute() {
+  async function handleRoute() {
     const hash = window.location.hash || "#/";
     const view = routes[hash] || NotfoundView;
 
-    document.getElementById("app").innerHTML = view();
+    document.getElementById("app").innerHTML = await view();
 
     if (hash === "#/login") handleLogin();
     if (hash === "#/register") handleRegister();

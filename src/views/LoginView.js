@@ -1,4 +1,4 @@
-import { login } from "../api/auth.js";
+import { login, createApiKey } from "../api/auth.js";
 
 export function LoginView() {
   return /* HTML */ `
@@ -73,6 +73,10 @@ export function handleLogin() {
 
       localStorage.setItem("token", data.data.accessToken);
       localStorage.setItem("name", data.data.name);
+
+      if (!localStorage.getItem("apiKey")) {
+        await createApiKey();
+      }
 
       window.location.hash = "#/";
     } catch (error) {

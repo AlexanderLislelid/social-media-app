@@ -45,3 +45,26 @@ export async function register(name, email, password) {
 
   return data;
 }
+
+export async function createApiKey() {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch("https://v2.api.noroff.dev/auth/api-key", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: "social-app" }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.errors?.[0]?.message || "Failed to create API key");
+  }
+
+  localStorage.setItem("apiKey", data.data.key);
+
+  return data;
+}

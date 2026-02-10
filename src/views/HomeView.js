@@ -1,4 +1,4 @@
-export function HomeView() {
+export async function HomeView() {
   return /* HTML */ `
     <section class="px-4 md:max-w-4xl md:mx-auto">
       <div
