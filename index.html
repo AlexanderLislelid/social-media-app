@@ -6,23 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>social-media-app</title>
   </head>
-  <body class="bg-gray-900 text-white">
-    <nav class="bg-gray-800 border-b border-gray-700">
+  <body class="bg-slate-200 flex flex-col min-h-screen">
+    <nav class="bg-slate-600">
       <div
         class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between"
       >
-        <span class="text-lg font-semibold text-green-400"> SocialApp </span>
+        <span class="text-lg font-semibold text-lime-300"> SocialApp </span>
 
         <ul class="flex gap-6 text-sm">
-          <li><a href="/" class="hover:text-green-400">Home</a></li>
-          <li><a href="/feed" class="hover:text-green-400">Feed</a></li>
-          <li><a href="/profile" class="hover:text-green-400">Profile</a></li>
-          <li><a href="/login" class="hover:text-green-400">Login</a></li>
+          <li>
+            <a href="#/" class="text-slate-100 hover:text-lime-300">Home</a>
+          </li>
+          <li>
+            <a href="#/feed" class="text-slate-100 hover:text-lime-300">Feed</a>
+          </li>
+          <li>
+            <a href="#/profile" class="text-slate-100 hover:text-lime-300"
+              >Profile</a
+            >
+          </li>
+          <li>
+            <a href="#/login" class="text-slate-100 hover:text-lime-300"
+              >Login</a
+            >
+          </li>
         </ul>
       </div>
     </nav>
 
-    <div id="app" class="p-6"></div>
+    <main id="app" class="p-6 flex-1"></main>
+
+    <footer class="p-6 bg-slate-600 flex justify-center text-slate-300">
+      <p>&copy;Socialapp 2026</p>
+    </footer>
 
     <script type="module" src="/src/main.js"></script>
   </body>
