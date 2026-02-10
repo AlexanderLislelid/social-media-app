@@ -7,7 +7,7 @@ export function NotfoundView() {
         href="#/"
         class="mt-6 p-2 bg-blue-500 rounded-md text-white hover:bg-blue-600"
       >
-        Back to frontpage
+        Back to homepage
       </a>
     </section>
   `;
