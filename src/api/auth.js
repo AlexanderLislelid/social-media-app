@@ -46,10 +46,13 @@ export async function register(name, email, password) {
   return data;
 }
 
+const API_KEY_URL = "https://v2.api.noroff.dev/auth/create-api-key";
+
 export async function createApiKey() {
   const token = localStorage.getItem("token");
+  if (!token) throw new Error("Missing token - log in first");
 
-  const response = await fetch("https://v2.api.noroff.dev/auth/api-key", {
+  const response = await fetch(API_KEY_URL, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -65,6 +68,5 @@ export async function createApiKey() {
   }
 
   localStorage.setItem("apiKey", data.data.key);
-
   return data;
 }
