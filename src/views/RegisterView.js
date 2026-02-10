@@ -2,16 +2,65 @@ import { register } from "../api/auth.js";
 
 export function RegisterView() {
   return /* HTML */ `
-    <section>
-      <p>name: my_username</p>
-      <p>email": "first.last@stud.noroff.no</p>
-      <p>password": your-password</p>
-      <form id="registerForm">
-        <input id="name" type="text" placeholder="Name" required />
-        <input id="email" type="email" placeholder="Email" required />
-        <input id="password" type="password" placeholder="Password" required />
-        <button type="submit">Register</button>
-      </form>
+    <section class="px-4 mt-12">
+      <div class="max-w-md mx-auto bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Register</h1>
+
+        <form id="registerForm" class="space-y-4">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">
+              Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              placeholder="your_username"
+              required
+              class="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              placeholder="your.name@stud.noroff.no"
+              required
+              class="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+            />
+          </div>
+
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              required
+              class="mt-1 w-full border border-gray-300 rounded px-3 py-2 "
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+          >
+            Register
+          </button>
+        </form>
+
+        <p class="text-sm text-gray-600 mt-4 text-center">
+          Already have an account?
+          <a href="#/login" class="text-blue-600 hover:underline"> Login </a>
+        </p>
+      </div>
     </section>
   `;
 }

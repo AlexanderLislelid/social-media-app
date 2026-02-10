@@ -2,13 +2,57 @@ import { login } from "../api/auth.js";
 
 export function LoginView() {
   return /* HTML */ `
-    <section>
-      <form id="loginForm">
-        <input id="email" type="email" placeholder="Email" required />
-        <input id="password" type="password" placeholder="Password" required />
-        <button type="submit">Log in</button>
-      </form>
-      <a href="#/register">Register</a>
+    <section class="px-4 mt-12">
+      <div class="max-w-md mx-auto bg-white rounded-lg shadow p-6">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Log in</h1>
+
+        <form id="loginForm" class="space-y-4">
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              placeholder="your@email.com"
+              autocomplete="email"
+              required
+              class="mt-1 w-full border border-gray-300 rounded px-3 py-2"
+            />
+          </div>
+
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+              class="mt-1 w-full border border-gray-300 rounded px-3 py-2 "
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+          >
+            Log in
+          </button>
+        </form>
+
+        <p class="text-sm text-gray-600 mt-4 text-center">
+          Don't have an account?
+          <a href="#/register" class="text-blue-600 hover:underline">
+            Register
+          </a>
+        </p>
+      </div>
     </section>
   `;
 }
