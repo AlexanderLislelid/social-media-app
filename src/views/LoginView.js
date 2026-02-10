@@ -44,6 +44,7 @@ export function LoginView() {
           >
             Log in
           </button>
+          <p id="loginError" class="text-red-500 text-sm hidden"></p>
         </form>
 
         <p class="text-sm text-gray-600 mt-4 text-center">
@@ -59,17 +60,30 @@ export function LoginView() {
 
 export function handleLogin() {
   const form = document.getElementById("loginForm");
+  if (!form) return;
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const data = await login(email, password);
 
-    localStorage.setItem("token", data.data.accessToken);
-    localStorage.setItem("name", data.data.name);
+    try {
+      const data = await login(email, password);
 
-    window.location.hash = "#/";
+      localStorage.setItem("token", data.data.accessToken);
+      localStorage.setItem("name", data.data.name);
+
+      window.location.hash = "#/";
+    } catch (error) {
+      console.error(error.message);
+
+      // vise melding i UI
+      const errorMsg = document.getElementById("loginError");
+      if (errorMsg) {
+        errorMsg.textContent = error.message;
+        errorMsg.classList.remove("hidden");
+      }
+    }
   });
 }

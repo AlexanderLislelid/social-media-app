@@ -54,6 +54,7 @@ export function RegisterView() {
           >
             Register
           </button>
+          <p id="registerError" class="text-red-500 text-sm hidden"></p>
         </form>
 
         <p class="text-sm text-gray-600 mt-4 text-center">
@@ -82,7 +83,11 @@ export function handleRegister() {
 
       window.location.hash = "#/login";
     } catch (error) {
-      console.error(error.message);
+      const errorMsg = document.getElementById("registerError");
+      if (errorMsg) {
+        errorMsg.textContent = error.message;
+        errorMsg.classList.remove("hidden");
+      }
     }
   });
 }

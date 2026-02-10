@@ -2,3 +2,9 @@
 // Profiles: https://docs.noroff.dev/docs/v2/social/profiles
 
 const BASE_URL = "https://v2.api.noroff.dev/social/posts";
+
+export async function fetchPosts() {
+  try {
+    const response = await fetch(BASE_URL);
+  } catch (error) {}
+}
