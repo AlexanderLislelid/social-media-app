@@ -5,7 +5,7 @@ export function NotfoundView() {
       <p class="mt-2 text-slate-800">The page does not exist.</p>
       <a
         href="#/"
-        class="mt-6 p-2 bg-slate-500 rounded-md text-white hover:scale-105"
+        class="mt-6 p-2 bg-blue-500 rounded-md text-white hover:bg-blue-600"
       >
         Back to frontpage
       </a>
