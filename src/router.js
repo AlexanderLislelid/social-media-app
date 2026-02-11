@@ -2,7 +2,7 @@ import { HomeView } from "./views/HomeView.js";
 import { NotfoundView } from "./views/NotFoundView.js";
 import { LoginView, initLogin } from "./views/LoginView.js";
 import { RegisterView } from "./views/RegisterView.js";
-import { ProfileView } from "./views/ProfileView.js";
+import { ProfileView, renderProfile } from "./views/ProfileView.js";
 
 export function router() {
   const routes = {
@@ -19,6 +19,7 @@ export function router() {
     document.getElementById("app").innerHTML = await view();
 
     if (hash === "#/login") initLogin();
+    if (hash === "#/profile") renderProfile();
     // if (hash === "#/register") handleRegister();
   }
 
