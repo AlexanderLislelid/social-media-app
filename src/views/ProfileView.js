@@ -7,10 +7,11 @@ export function ProfileView() {
       <img id="avatar" class="w-24 rounded-full mt-4 mb-8"></img>
       <h1 id="profileWelcome"></h1>
       <div class="flex gap-2 mt-8">
-        <p>Followers:<span id="followers"></span></p>
-        <p>Following:<span id="following"></span></p>
-        <p>Posts:<span id="posts"></span></p>
+        <p><span id="followers"></span></p>
+        <p><span id="following"></span></p>
+        <p><span id="posts"></span></p>
       </div>
+      <button id="logout"></button>
     </section>
   `;
 }
@@ -25,13 +26,26 @@ export async function renderProfile() {
   const followers = document.getElementById("followers");
   const following = document.getElementById("following");
   const posts = document.getElementById("posts");
+  const logoutBtn = document.getElementById("logout");
 
-  welcomeMsg.textContent = `Welcome back ${profile.name}`;
-  avatar.src = profile.avatar.url;
-  avatar.alt = "Profile picture";
-  followers.textContent = profile._count.followers;
-  following.textContent = profile._count.following;
-  posts.textContent = profile._count.posts;
+  if (!loadToken()) {
+    logoutBtn.style.display = "none";
+  }
 
-  console.log(profile);
+  if (loadToken()) {
+    welcomeMsg.textContent = `Welcome back ${profile.name}`;
+    avatar.src = profile.avatar.url;
+    avatar.alt = "Profile picture";
+    followers.textContent = profile._count.followers;
+    following.textContent = profile._count.following;
+    posts.textContent = profile._count.posts;
+
+    logoutBtn.textContent = "Logout";
+    logoutBtn.addEventListener("click", (e) => {
+      localStorage.removeItem("username");
+      removeToken();
+
+      window.location.hash = "#/login";
+    });
+  }
 }
