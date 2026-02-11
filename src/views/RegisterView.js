@@ -1,3 +1,5 @@
+import { post } from "../api/apiClient.js";
+
 export function RegisterView() {
   return /* HTML */ `
     <section class="px-4 mt-12">
@@ -6,16 +8,8 @@ export function RegisterView() {
 
         <form id="registerForm" class="space-y-4">
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              placeholder="your_username"
-              required
-              class="mt-1 w-full border border-gray-300 rounded px-3 py-2"
-            />
+            <label for="name"> Name </label>
+            <input id="name" type="text" placeholder="your_username" required />
           </div>
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">
@@ -26,66 +20,58 @@ export function RegisterView() {
               type="email"
               placeholder="your.name@stud.noroff.no"
               required
-              class="mt-1 w-full border border-gray-300 rounded px-3 py-2"
             />
           </div>
 
           <div>
-            <label
-              for="password"
-              class="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
+            <label for="password"> Password </label>
             <input
               id="password"
               type="password"
               placeholder="••••••••"
               required
-              class="mt-1 w-full border border-gray-300 rounded px-3 py-2 "
             />
           </div>
-
-          <button
-            type="submit"
-            class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
-          >
-            Register
-          </button>
-          <p id="registerError" class="text-red-500 text-sm hidden"></p>
+          <span id="registerError" class="hidden"></span>
+          <button type="submit">Register</button>
         </form>
 
-        <p class="text-sm text-gray-600 mt-4 text-center">
-          Already have an account?
-          <a href="#/login" class="text-blue-600 hover:underline"> Login </a>
-        </p>
+        <p>Already have an account?</p>
+        <a href="#/login">Login</a>
       </div>
     </section>
   `;
 }
 
-export function handleRegister() {
+// const data = await post("auth/login", {
+//   email,
+//   password,
+// });
+
+export function registerUser() {
   const form = document.getElementById("registerForm");
-  if (!form) return;
+  const name = document.getElementById("name");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const errorMsg = document.getElementById("registerError");
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    errorMsg.classList.add("hidden");
+    errorMsg.textContent = "";
 
     try {
-      const data = await register(name, email, password);
-      console.log("User created:", data);
+      await post("auth/register", {
+        name: name.value.trim(),
+        email: email.value.trim(),
+        password: password.value,
+      });
 
       window.location.hash = "#/login";
     } catch (error) {
-      const errorMsg = document.getElementById("registerError");
-      if (errorMsg) {
-        errorMsg.textContent = error.message;
-        errorMsg.classList.remove("hidden");
-      }
+      errorMsg.textContent = error.message;
+      errorMsg.classList.remove("hidden");
     }
   });
 }

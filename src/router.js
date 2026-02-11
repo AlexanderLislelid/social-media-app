@@ -1,7 +1,7 @@
 import { HomeView } from "./views/HomeView.js";
 import { NotfoundView } from "./views/NotFoundView.js";
 import { LoginView, initLogin } from "./views/LoginView.js";
-import { RegisterView } from "./views/RegisterView.js";
+import { registerUser, RegisterView } from "./views/RegisterView.js";
 import { ProfileView, renderProfile } from "./views/ProfileView.js";
 
 export function router() {
@@ -20,7 +20,7 @@ export function router() {
 
     if (hash === "#/login") initLogin();
     if (hash === "#/profile") renderProfile();
-    // if (hash === "#/register") handleRegister();
+    if (hash === "#/register") registerUser();
   }
 
   window.addEventListener("hashchange", handleRoute);
