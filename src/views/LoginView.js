@@ -1,5 +1,5 @@
 import { post } from "../api/apiClient.js";
-import { saveToken } from "../utils/storage.js";
+import { loadApiKey, saveApiKey, saveToken } from "../utils/storage.js";
 
 export function LoginView() {
   return /* HTML */ `
@@ -43,7 +43,7 @@ export function LoginView() {
   `;
 }
 
-export async function initLogin() {
+export function initLogin() {
   const form = document.getElementById("loginForm");
   const email = document.getElementById("email");
   const password = document.getElementById("password");
@@ -51,6 +51,8 @@ export async function initLogin() {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    errorMsg.classList.add("hidden");
+    errorMsg.textContent = "";
 
     try {
       const data = await post("auth/login", {
@@ -59,6 +61,13 @@ export async function initLogin() {
       });
 
       saveToken(data.data.accessToken);
+
+      if (!loadApiKey()) {
+        const keyData = await post("auth/create-api-key", {
+          name: "Social-App",
+        });
+        saveApiKey(keyData.data.key);
+      }
 
       window.location.hash = "#/";
     } catch (error) {
