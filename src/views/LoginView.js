@@ -1,4 +1,5 @@
-import { login, createApiKey } from "../api/auth.js";
+import { post } from "../api/apiClient.js";
+import { saveToken } from "../utils/storage.js";
 
 export function LoginView() {
   return /* HTML */ `
@@ -8,86 +9,61 @@ export function LoginView() {
 
         <form id="loginForm" class="space-y-4">
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">
-              Email
-            </label>
+            <label for="email"> Email </label>
             <input
               id="email"
               type="email"
               placeholder="your@email.com"
               autocomplete="email"
               required
-              class="mt-1 w-full border border-gray-300 rounded px-3 py-2"
             />
           </div>
 
           <div>
-            <label
-              for="password"
-              class="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
+            <label for="password"> Password </label>
             <input
               id="password"
               type="password"
               placeholder="••••••••"
               autocomplete="current-password"
               required
-              class="mt-1 w-full border border-gray-300 rounded px-3 py-2 "
             />
           </div>
 
-          <button
-            type="submit"
-            class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
-          >
-            Log in
-          </button>
+          <button type="submit">Log in</button>
           <p id="loginError" class="text-red-500 text-sm hidden"></p>
         </form>
 
-        <p class="text-sm text-gray-600 mt-4 text-center">
+        <p>
           Don't have an account?
-          <a href="#/register" class="text-blue-600 hover:underline">
-            Register
-          </a>
+          <a href="#/register"> Register </a>
         </p>
       </div>
     </section>
   `;
 }
 
-export function handleLogin() {
+export async function initLogin() {
   const form = document.getElementById("loginForm");
-  if (!form) return;
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const errorMsg = document.getElementById("loginError");
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
     try {
-      const data = await login(email, password);
+      const data = await post("auth/login", {
+        email: email.value.trim(),
+        password: password.value,
+      });
 
-      localStorage.setItem("token", data.data.accessToken);
-      localStorage.setItem("name", data.data.name);
-
-      if (!localStorage.getItem("apiKey")) {
-        await createApiKey();
-      }
+      saveToken(data.data.accessToken);
 
       window.location.hash = "#/";
     } catch (error) {
-      console.error(error.message);
-
-      // vise melding i UI
-      const errorMsg = document.getElementById("loginError");
-      if (errorMsg) {
-        errorMsg.textContent = error.message;
-        errorMsg.classList.remove("hidden");
-      }
+      errorMsg.textContent = error.message;
+      errorMsg.classList.remove("hidden");
     }
   });
 }

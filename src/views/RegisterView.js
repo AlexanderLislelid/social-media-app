@@ -1,5 +1,3 @@
-import { register } from "../api/auth.js";
-
 export function RegisterView() {
   return /* HTML */ `
     <section class="px-4 mt-12">
