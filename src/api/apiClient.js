@@ -52,7 +52,37 @@ async function apiClient(endpoint, options = {}) {
 }
 
 export const get = (endpoint) => apiClient(endpoint);
+//const posts = await get("social/posts");
+//const profile = await get(`social/profiles/${username}`);
+
 export const post = (endpoint, body) => apiClient(endpoint, { body });
+// await post("social/posts", {
+//   title: "my first post",
+//   body: "this is a testpost"
+// });
+
+// const data = await post("auth/login", {
+//   email,
+//   password,
+// });
+
 export const put = (endpoint, body) =>
   apiClient(endpoint, { method: "PUT", body });
+
+// - Update post
+// await put(`social/posts/${postId}`, {
+//   title: "Updated title",
+//   body: "new text",
+// });
+
+// const username = localStorage.getItem("username");
+
+// - Update profile
+// await put(`social/profiles/${username}`, {
+//   bio: "Frontend developer in progress 🚀",
+// });
+
 export const del = (endpoint) => apiClient(endpoint, { method: "DELETE" });
+
+// - deleting a post
+// await del(`social/posts/${postId}`);
