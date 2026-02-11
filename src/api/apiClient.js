@@ -2,6 +2,7 @@ import { loadApiKey, loadToken } from "../utils/storage.js";
 
 const BASE_URL = "https://v2.api.noroff.dev/";
 
+// API client adapted from the JS2 Module 2.2 example (advanced fetch request configuration)
 async function apiClient(endpoint, options = {}) {
   const { body, ...customOptions } = options;
 
