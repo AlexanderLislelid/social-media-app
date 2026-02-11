@@ -1,5 +1,10 @@
 import { post } from "../api/apiClient.js";
-import { loadApiKey, saveApiKey, saveToken } from "../utils/storage.js";
+import {
+  loadApiKey,
+  saveApiKey,
+  saveToken,
+  loadToken,
+} from "../utils/storage.js";
 
 export function LoginView() {
   return /* HTML */ `
@@ -43,6 +48,7 @@ export function LoginView() {
   `;
 }
 
+//JSDOC this function? user login (sends email and password -> saves token -> checks if there is an api key, if not -> create api key and add to localstorage -> Sets username to localstorage -> router adds function after DOMcontent is loaded)
 export function initLogin() {
   const form = document.getElementById("loginForm");
   const email = document.getElementById("email");
@@ -61,6 +67,7 @@ export function initLogin() {
       });
 
       saveToken(data.data.accessToken);
+      localStorage.setItem("username", data.data.name);
 
       if (!loadApiKey()) {
         const keyData = await post("auth/create-api-key", {
