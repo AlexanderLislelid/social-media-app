@@ -1,20 +1,25 @@
 import { loadToken, loadApiKey } from "../utils/storage.js";
 import { openPostModal } from "./PostModalView";
-import { get, put, post, del } from "../api/apiClient.js";
+import { get } from "../api/apiClient.js";
 
 export async function HomeView() {
   if (loadToken() && loadApiKey()) {
     return /* HTML */ `
       <section class="px-4 md:max-w-4xl md:mx-auto">
-        <form id="search-form"
+        <form
+          id="search-form"
           class="bg-white rounded-lg shadow p-4 mb-6 flex flex-col md:flex-row gap-4"
         >
-          <input type="search"
+          <input
+            type="search"
+            name="search"
+            id="search"
             placeholder="Search for posts"
             class="flex-1 border rounded px-3 py-2 h-10 resize-none"
-          ></input>
+          />
 
           <button
+            type="submit"
             class="shrink-0 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto"
           >
             Search posts
@@ -53,9 +58,10 @@ export async function HomeView() {
 
 let currentPage = 1;
 let isFetching = false;
+let currentSearch = "";
 
 //This code is based on pagination example from JS2 Module 2.2
-export async function fetchAndShowPosts(page) {
+export async function fetchAndShowPosts(page, search = "") {
   const postsContainer = document.getElementById("posts");
   const nextBtn = document.getElementById("next-page-btn");
 
@@ -66,9 +72,14 @@ export async function fetchAndShowPosts(page) {
   nextBtn.disabled = true;
 
   try {
-    const response = await get(
-      `social/posts?page=${page}&limit=15&_author=true`,
-    );
+    let url = `social/posts?page=${page}&limit=10&_author=true&_count=true`;
+
+    if (search) {
+      url = `social/posts/search?q=${encodeURIComponent(search)}&_author=true&_count=true`;
+    }
+
+    const response = await get(url);
+
     const posts = response.data;
     const meta = response.meta;
 
@@ -177,21 +188,29 @@ export function homeBtns() {
   nextBtn.onclick = () => {
     if (isFetching) return;
     currentPage++;
-    fetchAndShowPosts(currentPage);
+    fetchAndShowPosts(currentPage, currentSearch);
     window.scrollTo(0, 0);
   };
 
   prevBtn.onclick = () => {
     if (isFetching || currentPage <= 1) return;
     currentPage--;
-    fetchAndShowPosts(currentPage);
+    fetchAndShowPosts(currentPage, currentSearch);
     window.scrollTo(0, 0);
   };
 }
 
-// export async function searchPosts(query) {
-//   const response = await get(
-//     `social/posts?search=${encodeURIComponent(query)}`,
-//   );
-//   return response.data;
-// }
+export function setupSearch() {
+  const form = document.getElementById("search-form");
+  const input = document.getElementById("search");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    currentSearch = input.value.trim();
+    currentPage = 1;
+
+    fetchAndShowPosts(currentPage, currentSearch);
+    window.scrollTo(0, 0);
+  });
+}
