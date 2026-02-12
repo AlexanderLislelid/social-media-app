@@ -36,6 +36,20 @@ export async function openPostModal(postId) {
     minute: "2-digit",
   });
 
+  const posterAvatar = post.author?.avatar?.url
+    ? `<img 
+     class="w-14 h-14 rounded-full object-cover" 
+     src="${post.author.avatar.url}" 
+     alt="post author's profile picture"
+   >`
+    : "";
+
+  const postTitle =
+    post.title && `<h2 class="text-lg font-semibold">${post.title}</h2>`;
+
+  const postBody =
+    post.body && `<p class="text-gray-700 leading-relaxed">${post.body}</p>`;
+
   const comments =
     post.comments
       .map(
@@ -43,7 +57,7 @@ export async function openPostModal(postId) {
         
     <div class="border-t pt-2 mt-4">
     <div class="flex items-center gap-4 py-2">
-    <img src="${comment.author.avatar.url}" class="w-8 h-8 rounded-full"></img>
+    <img src="${comment.author.avatar.url}" class="w-8 h-8 rounded-full" alt="${comment.author.name}'s avatar">
       <p class="text-sm font-semibold">${comment.author.name}</p>
       </div>
       <p class="text-sm text-gray-700">${comment.body}</p>
@@ -52,17 +66,6 @@ export async function openPostModal(postId) {
       )
       .join("") ||
     "<p class='text-sm text-gray-500 border-t pt-2 mt-4'>No comments yet</p>";
-
-  const posterAvatar =
-    post.author.avatar.url &&
-    `<img 
-     class="w-14 h-14 rounded-full object-cover" 
-     src="${post.author.avatar.url}" 
-     alt="commenter's profile picture"
-   >`;
-
-  const postTitle =
-    post.title && `<h2 class="text-lg font-semibold">${post.title}</h2>`;
 
   content.innerHTML = `
   <div class="bg-white rounded-xl shadow-md p-4 w-full max-w-2xl mx-auto space-y-3">
@@ -75,12 +78,10 @@ export async function openPostModal(postId) {
         </p>
       </div>
 
-      <p class="text-xs text-gray-500">${date}</span>
+      <p class="text-xs text-gray-500">${date}</p>
     </div>
-
     ${postTitle}
-    ${post.body && `<p class="text-gray-700 leading-relaxed">${post.body}</p>`}
-
+    ${postBody}
     ${
       post.media?.url
         ? `<img 
