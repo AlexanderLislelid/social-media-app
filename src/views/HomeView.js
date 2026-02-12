@@ -1,4 +1,5 @@
 import { loadToken, loadApiKey } from "../utils/storage.js";
+import { get, put, post, del } from "../api/apiClient.js";
 
 export async function HomeView() {
   if (loadToken() && loadApiKey()) {
@@ -19,7 +20,71 @@ export async function HomeView() {
           </button>
         </div>
       </section>
+      <section id="feed">
+        <div id="posts"></div>
+        <div>
+          <button id="prev-page-btn">Previous page</button>
+          <button id="next-page-btn">Next page</button>
+        </div>
+      </section>
     `;
   }
   window.location.hash = "#/login";
+}
+
+let currentPage = 1;
+let isFetching = false;
+
+//This code is based on pagination example from JS2 Module 2.2
+export async function fetchAndShowPosts(page) {
+  const postsContainer = document.getElementById("posts");
+  const nextBtn = document.getElementById("next-page-btn");
+
+  if (!postsContainer || !nextBtn) return;
+
+  isFetching = true;
+  nextBtn.textContent = "Loading...";
+  nextBtn.disabled = true;
+
+  try {
+    const response = await get(`social/posts?page=${page}&limit=15`);
+    const posts = response.data;
+    const meta = response.meta;
+
+    postsContainer.innerHTML = "";
+
+    posts.forEach((post) => {
+      const card = document.createElement("div");
+      card.textContent = post.title;
+      postsContainer.appendChild(card);
+    });
+
+    if (meta.isLastPage) {
+      nextBtn.style.display = "none"; // Hide button if no more pages
+    } else {
+      nextBtn.textContent = "Load More";
+      nextBtn.disabled = false;
+    }
+  } catch (error) {
+    console.error("Failed to fetch posts:", error);
+  } finally {
+    isFetching = false;
+  }
+}
+
+export function homeBtns() {
+  const nextBtn = document.getElementById("next-page-btn");
+  const prevBtn = document.getElementById("prev-page-btn");
+
+  nextBtn.onclick = () => {
+    if (isFetching) return;
+    currentPage++;
+    fetchAndShowPosts(currentPage);
+  };
+
+  prevBtn.onclick = () => {
+    if (isFetching || currentPage <= 1) return;
+    currentPage--;
+    fetchAndShowPosts(currentPage);
+  };
 }
