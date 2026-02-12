@@ -1,13 +1,9 @@
-import {
-  fetchAndShowPosts,
-  homeBtns,
-  HomeView,
-  initPostModal,
-} from "./views/HomeView.js";
+import { fetchAndShowPosts, homeBtns, HomeView } from "./views/HomeView.js";
 import { NotfoundView } from "./views/NotFoundView.js";
 import { LoginView, initLogin } from "./views/LoginView.js";
 import { registerUser, RegisterView } from "./views/RegisterView.js";
 import { ProfileView, renderProfile } from "./views/ProfileView.js";
+import { initPostModal } from "./views/PostModalView.js";
 
 export function router() {
   const routes = {
