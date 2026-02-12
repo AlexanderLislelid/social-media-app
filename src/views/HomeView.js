@@ -20,8 +20,8 @@ export async function HomeView() {
           </button>
         </div>
       </section>
-      <section id="feed" class="flex flex-col gap-6">
-        <div id="posts" class="flex flex-col border border-black p-4"></div>
+      <section id="feed">
+        <div id="posts"></div>
         <div>
           <button id="prev-page-btn">Previous page</button>
           <button id="next-page-btn">Next page</button>
@@ -57,27 +57,38 @@ export async function fetchAndShowPosts(page) {
       const card = document.createElement("div");
       const title = document.createElement("h2");
       const body = document.createElement("p");
+      const date = document.createElement("p");
+      const imageContainer = document.createElement("div");
+      const bottomCard = document.createElement("div");
 
       card.className = "post-card";
+      date.className = "text-sm text-right";
+      body.className = "post-textarea bg-slate-200";
 
       const imageUrl = post.media?.url;
       if (imageUrl) {
         const img = document.createElement("img");
         img.src = imageUrl;
         img.alt = post.media?.alt || "Post image";
-        card.append(img);
+        imageContainer.append(img);
       }
 
-      title.textContent = post.title;
-      body.textContent = post.body;
+      const dateString = post.updated;
+      const formattedDateString = new Date(dateString).toLocaleString("no-NO");
 
-      card.append(title, body);
-      postsContainer.appendChild(card);
+      title.textContent =
+        post.title.charAt(0).toUpperCase() + post.title.slice(1);
+      body.textContent = post.body;
+      date.textContent = formattedDateString;
+
+      bottomCard.append(date);
+      card.append(title, imageContainer, body, bottomCard);
+      postsContainer.append(card);
       console.log(post);
     });
 
     if (meta.isLastPage) {
-      nextBtn.style.display = "none"; // Hide button if no more pages
+      nextBtn.style.display = "none";
     } else {
       nextBtn.textContent = "Load More";
       nextBtn.disabled = false;
