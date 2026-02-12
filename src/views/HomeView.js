@@ -86,6 +86,9 @@ export async function fetchAndShowPosts(page) {
       const avatarWrapper = document.createElement("div");
       const bottomCard = document.createElement("div");
       const commentCount = document.createElement("p");
+      const reactionsWrapper = document.createElement("div");
+      const heartIcon = document.createElement("span");
+      const reactions = document.createElement("p");
 
       card.style.cursor = "pointer";
       card.className = "post-card";
@@ -95,12 +98,15 @@ export async function fetchAndShowPosts(page) {
       leftHeader.className = "flex items-center gap-2";
       avatarWrapper.className = "w-10 h-10 rounded-full overflow-hidden";
       commentCount.className = "text-sm ml-2 mt-2";
+      reactions.className = "text-sm";
+      bottomCard.className = "flex justify-between";
+      reactionsWrapper.className = "flex items-center gap-1 text-sm ml-2 mt-2";
 
       const imageUrl = post.media?.url;
       if (imageUrl) {
         const img = document.createElement("img");
         img.src = imageUrl;
-        img.alt = post.media?.alt || "Post image";
+        img.alt = "Post image";
         imageContainer.append(img);
       }
 
@@ -112,6 +118,14 @@ export async function fetchAndShowPosts(page) {
         userAvatar.className = "w-10 h-10 rounded-full";
         avatarWrapper.append(userAvatar);
       }
+
+      //icon from heroicons.com
+      heartIcon.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+       stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-800">
+    <path stroke-linecap="round" stroke-linejoin="round"
+      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+  </svg>`;
 
       const dateString = post.updated;
       const formattedDateString = new Date(dateString).toLocaleString("no-NO", {
@@ -128,12 +142,15 @@ export async function fetchAndShowPosts(page) {
       date.textContent = formattedDateString;
       username.textContent = post.author?.name || "Unknown user";
       commentCount.textContent = `${post._count.comments} Comments`;
+      reactions.textContent = `${post._count.reactions}`;
 
       //open a single post
       card.onclick = () => {
         openPostModal(post.id);
       };
-      bottomCard.append(commentCount);
+
+      reactionsWrapper.append(reactions, heartIcon);
+      bottomCard.append(commentCount, reactionsWrapper);
       leftHeader.append(avatarWrapper, username);
       header.append(leftHeader, date);
       card.append(header, title, imageContainer, body, bottomCard);
@@ -143,7 +160,7 @@ export async function fetchAndShowPosts(page) {
     if (meta.isLastPage) {
       nextBtn.style.display = "none";
     } else {
-      nextBtn.textContent = "Load More";
+      nextBtn.textContent = "Next Page";
       nextBtn.disabled = false;
     }
   } catch (error) {
@@ -161,12 +178,14 @@ export function homeBtns() {
     if (isFetching) return;
     currentPage++;
     fetchAndShowPosts(currentPage);
+    window.scrollTo(0, 0);
   };
 
   prevBtn.onclick = () => {
     if (isFetching || currentPage <= 1) return;
     currentPage--;
     fetchAndShowPosts(currentPage);
+    window.scrollTo(0, 0);
   };
 }
 
