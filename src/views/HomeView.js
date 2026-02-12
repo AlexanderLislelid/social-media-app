@@ -31,7 +31,6 @@ export async function HomeView() {
       <div
         id="post-modal"
         class="hidden fixed inset-0 items-start justify-center pt-24 z-50"
-        aria-hidden="true"
       >
         <div class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
 
