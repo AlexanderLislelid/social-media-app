@@ -20,8 +20,8 @@ export async function HomeView() {
           </button>
         </div>
       </section>
-      <section id="feed">
-        <div id="posts"></div>
+      <section id="feed" class="flex flex-col gap-6">
+        <div id="posts" class="flex flex-col border border-black p-4"></div>
         <div>
           <button id="prev-page-btn">Previous page</button>
           <button id="next-page-btn">Next page</button>
@@ -55,8 +55,25 @@ export async function fetchAndShowPosts(page) {
 
     posts.forEach((post) => {
       const card = document.createElement("div");
-      card.textContent = post.title;
+      const title = document.createElement("h2");
+      const body = document.createElement("p");
+
+      card.className = "post-card";
+
+      const imageUrl = post.media?.url;
+      if (imageUrl) {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = post.media?.alt || "Post image";
+        card.append(img);
+      }
+
+      title.textContent = post.title;
+      body.textContent = post.body;
+
+      card.append(title, body);
       postsContainer.appendChild(card);
+      console.log(post);
     });
 
     if (meta.isLastPage) {
