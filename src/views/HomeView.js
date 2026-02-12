@@ -22,7 +22,7 @@ export async function HomeView() {
       </section>
       <section id="feed">
         <div id="posts"></div>
-        <div>
+        <div class="flex justify-between mt-12">
           <button id="prev-page-btn">Previous page</button>
           <button id="next-page-btn">Next page</button>
         </div>
@@ -47,7 +47,9 @@ export async function fetchAndShowPosts(page) {
   nextBtn.disabled = true;
 
   try {
-    const response = await get(`social/posts?page=${page}&limit=15`);
+    const response = await get(
+      `social/posts?page=${page}&limit=15&_author=true`,
+    );
     const posts = response.data;
     const meta = response.meta;
 
@@ -59,11 +61,17 @@ export async function fetchAndShowPosts(page) {
       const body = document.createElement("p");
       const date = document.createElement("p");
       const imageContainer = document.createElement("div");
-      const bottomCard = document.createElement("div");
+      const header = document.createElement("div");
+      const leftHeader = document.createElement("div");
+      const username = document.createElement("span");
+      const avatarWrapper = document.createElement("div");
 
       card.className = "post-card";
-      date.className = "text-sm text-right";
+      date.className = "text-xs text-gray-500";
       body.className = "post-textarea bg-slate-200";
+      header.className = "flex justify-between items-center";
+      leftHeader.className = "flex items-center gap-2";
+      avatarWrapper.className = "w-10 h-10 rounded-full overflow-hidden";
 
       const imageUrl = post.media?.url;
       if (imageUrl) {
@@ -73,18 +81,34 @@ export async function fetchAndShowPosts(page) {
         imageContainer.append(img);
       }
 
+      const profileImgUrl = post.author?.avatar?.url;
+      if (profileImgUrl) {
+        const userAvatar = document.createElement("img");
+        userAvatar.src = profileImgUrl;
+        userAvatar.alt = `${post.author.name} avatar`;
+        userAvatar.className = "w-10 h-10 rounded-full";
+        avatarWrapper.append(userAvatar);
+      }
+
       const dateString = post.updated;
-      const formattedDateString = new Date(dateString).toLocaleString("no-NO");
+      const formattedDateString = new Date(dateString).toLocaleString("no-NO", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
 
       title.textContent =
         post.title.charAt(0).toUpperCase() + post.title.slice(1);
       body.textContent = post.body;
       date.textContent = formattedDateString;
+      username.textContent = post.author?.name || "Unknown user";
 
-      bottomCard.append(date);
-      card.append(title, imageContainer, body, bottomCard);
+      leftHeader.append(avatarWrapper, username);
+      header.append(leftHeader, date);
+      card.append(header, title, imageContainer, body);
       postsContainer.append(card);
-      console.log(post);
     });
 
     if (meta.isLastPage) {
@@ -116,3 +140,10 @@ export function homeBtns() {
     fetchAndShowPosts(currentPage);
   };
 }
+
+// export async function searchPosts(query) {
+//   const response = await get(
+//     `social/posts?search=${encodeURIComponent(query)}`,
+//   );
+//   return response.data;
+// }
