@@ -1,4 +1,9 @@
-import { fetchAndShowPosts, homeBtns, HomeView } from "./views/HomeView.js";
+import {
+  fetchAndShowPosts,
+  homeBtns,
+  HomeView,
+  initPostModal,
+} from "./views/HomeView.js";
 import { NotfoundView } from "./views/NotFoundView.js";
 import { LoginView, initLogin } from "./views/LoginView.js";
 import { registerUser, RegisterView } from "./views/RegisterView.js";
@@ -23,6 +28,7 @@ export function router() {
     if (hash === "#/register") registerUser();
     if (hash === "#/") {
       homeBtns();
+      initPostModal();
       fetchAndShowPosts(1);
     }
   }

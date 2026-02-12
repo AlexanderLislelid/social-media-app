@@ -27,6 +27,25 @@ export async function HomeView() {
           <button id="next-page-btn">Next page</button>
         </div>
       </section>
+      <div
+        id="post-modal"
+        class="hidden fixed inset-0 items-start justify-center pt-24 z-50"
+        aria-hidden="true"
+      >
+        <div class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+
+        <div
+          class="modal-panel bg-white rounded-xl shadow-xl p-4 w-full max-w-2xl relative"
+        >
+          <div class="flex justify-end">
+            <button id="modal-close" class="bg-red-500 p-2 text-white rounded">
+              Close
+            </button>
+          </div>
+
+          <div id="post-modal-content"></div>
+        </div>
+      </div>
     `;
   }
   window.location.hash = "#/login";
@@ -65,13 +84,17 @@ export async function fetchAndShowPosts(page) {
       const leftHeader = document.createElement("div");
       const username = document.createElement("span");
       const avatarWrapper = document.createElement("div");
+      const bottomCard = document.createElement("div");
+      const commentCount = document.createElement("p");
 
+      card.style.cursor = "pointer";
       card.className = "post-card";
       date.className = "text-xs text-gray-500";
       body.className = "post-textarea bg-slate-200";
       header.className = "flex justify-between items-center";
       leftHeader.className = "flex items-center gap-2";
       avatarWrapper.className = "w-10 h-10 rounded-full overflow-hidden";
+      commentCount.className = "text-sm ml-2 mt-2";
 
       const imageUrl = post.media?.url;
       if (imageUrl) {
@@ -104,10 +127,16 @@ export async function fetchAndShowPosts(page) {
       body.textContent = post.body;
       date.textContent = formattedDateString;
       username.textContent = post.author?.name || "Unknown user";
+      commentCount.textContent = `${post._count.comments} Comments`;
 
+      //open a single post
+      card.onclick = () => {
+        openPostModal(post.id);
+      };
+      bottomCard.append(commentCount);
       leftHeader.append(avatarWrapper, username);
       header.append(leftHeader, date);
-      card.append(header, title, imageContainer, body);
+      card.append(header, title, imageContainer, body, bottomCard);
       postsContainer.append(card);
     });
 
@@ -147,3 +176,76 @@ export function homeBtns() {
 //   );
 //   return response.data;
 // }
+export function initPostModal() {
+  const modal = document.getElementById("post-modal");
+  const closeBtn = document.getElementById("modal-close");
+
+  function close() {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+    document.getElementById("post-modal-content").innerHTML = "";
+  }
+
+  //add function to close with escape later
+  closeBtn.onclick = close;
+}
+
+export async function openPostModal(postId) {
+  const modal = document.getElementById("post-modal");
+  const content = document.getElementById("post-modal-content");
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+
+  const result = await get(
+    `social/posts/${postId}?_author=true&_comments=true&_reactions=true`,
+  );
+  const post = result.data;
+
+  const date = new Date(post.updated ?? post.created).toLocaleString("no-NO", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  content.innerHTML = `
+  <div class="bg-white rounded-xl shadow-md p-4 w-full max-w-2xl mx-auto space-y-3">
+
+    <div class="flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        ${
+          post.author?.avatar?.url
+            ? `<img 
+                class="w-14 h-14 rounded-full object-cover" 
+                src="${post.author.avatar.url}" 
+                alt="${post.author?.name ?? "User"} avatar"
+              >`
+            : ""
+        }
+        <strong class="font-semibold">
+          ${post.author?.name}
+        </strong>
+      </div>
+
+      <span class="text-xs text-gray-500">${date}</span>
+    </div>
+
+    ${post.title ? `<h2 class="text-lg font-semibold">${post.title}</h2>` : ""}
+
+    ${post.body ? `<p class="text-gray-700 leading-relaxed">${post.body}</p>` : ""}
+
+    ${
+      post.media?.url
+        ? `<img 
+            class="w-full rounded-lg object-cover max-h-[400px]" 
+            src="${post.media.url}" 
+            alt="${post.media?.alt ?? "Post image"}"
+          >`
+        : ""
+    }
+
+  </div>
+`;
+}
