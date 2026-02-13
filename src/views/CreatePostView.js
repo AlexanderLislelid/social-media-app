@@ -1,3 +1,8 @@
+import { loadToken, loadApiKey } from "../utils/storage.js";
+
 export async function CreatePostView() {
-  return /* HTML */ ` <h1>Create posts</h1> `;
+  if (loadToken() && loadApiKey()) {
+    return /* HTML */ ` <h1>Create posts</h1> `;
+  }
+  window.location.hash = "#/login";
 }
