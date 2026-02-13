@@ -153,7 +153,7 @@ export async function fetchAndShowPosts(page, search = "") {
       date.textContent = formattedDateString;
       username.textContent = post.author?.name || "Unknown user";
       commentCount.textContent = `${post._count.comments} Comments`;
-      reactions.textContent = `${post._count.reactions}`;
+      reactions.textContent = post._count.reactions;
 
       //open a single post
       card.onclick = () => {
@@ -176,6 +176,7 @@ export async function fetchAndShowPosts(page, search = "") {
     }
   } catch (error) {
     console.error("Failed to fetch posts:", error);
+    alert(error);
   } finally {
     isFetching = false;
   }
