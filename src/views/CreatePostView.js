@@ -35,23 +35,26 @@ export function createPost() {
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    try {
-      const postData = {
-        title: titleInput.value,
-        body: contentInput.value,
+
+    const title = titleInput.value.trim();
+    const body = contentInput.value.trim();
+    const mediaUrl = mediaUrlInput.value.trim();
+
+    const content = { title, body };
+
+    if (mediaUrl) {
+      content.media = {
+        url: mediaUrl,
+        alt: title || "Post image",
       };
+    }
 
-      if (mediaUrlInput.value) {
-        postData.media = {
-          url: mediaUrlInput.value,
-          alt: titleInput.value,
-        };
-      }
-
-      await post("social/posts", postData);
+    try {
+      await post("social/posts", content);
       window.location.hash = "#/";
     } catch (error) {
       console.error(error);
+      alert(error.message);
     }
   });
 }
