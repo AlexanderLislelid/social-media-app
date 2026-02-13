@@ -9,6 +9,7 @@ import { LoginView, initLogin } from "./views/LoginView.js";
 import { registerUser, RegisterView } from "./views/RegisterView.js";
 import { ProfileView, renderProfile } from "./views/ProfileView.js";
 import { initPostModal } from "./views/PostModalView.js";
+import { CreatePostView } from "./views/CreatePostView.js";
 
 export function router() {
   const routes = {
@@ -16,6 +17,7 @@ export function router() {
     "#/login": LoginView,
     "#/register": RegisterView,
     "#/profile": ProfileView,
+    "#/create": CreatePostView,
   };
 
   async function handleRoute() {
@@ -33,6 +35,7 @@ export function router() {
       initPostModal();
       fetchAndShowPosts(1, "");
     }
+    // if(hash === "#/create")
   }
 
   window.addEventListener("hashchange", handleRoute);
