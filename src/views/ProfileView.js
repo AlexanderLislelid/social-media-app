@@ -1,5 +1,5 @@
 import { loadToken, removeToken } from "../utils/storage.js";
-import { get } from "../api/apiClient.js";
+import { get, del } from "../api/apiClient.js";
 
 export function ProfileView() {
   return /* HTML */ `
@@ -14,9 +14,9 @@ export function ProfileView() {
       
       <button id="logout"></button>
     </section>
-    <div id="posts-wrapper">
+    
       <div id="posts" class="mt-20 flex flex-col gap-12 items-center"></div>
-      </div>
+      
   `;
 }
 
@@ -36,7 +36,6 @@ export async function renderProfile() {
   const following = document.getElementById("following");
   const numberOfPosts = document.getElementById("number-of-posts");
   const logoutBtn = document.getElementById("logout");
-  const postWrapper = document.getElementById("posts-wrapper");
 
   if (!loadToken()) {
     logoutBtn.style.display = "none";
@@ -49,6 +48,9 @@ export async function renderProfile() {
     followers.textContent = profile._count.followers;
     following.textContent = profile._count.following;
     numberOfPosts.textContent = profile._count.posts;
+
+    const postCard = document.getElementById("posts");
+    postCard.innerHTML = "";
 
     posts.forEach((post) => {
       const postCard = document.getElementById("posts");
@@ -72,6 +74,11 @@ export async function renderProfile() {
 
       contentWrapper.append(body);
       postCard.append(contentWrapper, deleteBtn);
+
+      deleteBtn.addEventListener("click", async () => {
+        await del(`social/posts/${post.id}`);
+        renderProfile();
+      });
     });
 
     logoutBtn.textContent = "Logout";
