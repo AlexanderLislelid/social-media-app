@@ -36,18 +36,22 @@ export function createPost() {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     try {
-      await post("social/posts", {
+      const postData = {
         title: titleInput.value,
         body: contentInput.value,
-        media: {
+      };
+
+      if (mediaUrlInput.value) {
+        postData.media = {
           url: mediaUrlInput.value,
           alt: titleInput.value,
-        },
-      });
+        };
+      }
+
+      await post("social/posts", postData);
+      window.location.hash = "#/";
     } catch (error) {
       console.error(error);
-    } finally {
-      window.location.hash = "#/";
     }
   });
 }
