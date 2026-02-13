@@ -1,3 +1,5 @@
+noroff api docs url: https://docs.noroff.dev/docs/v2/social/profiles
+
 Use examples of get, post, put, delete (url: "https://v2.api.noroff.dev/";)
 
 - Get posts

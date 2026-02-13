@@ -9,7 +9,7 @@ import { LoginView, initLogin } from "./views/LoginView.js";
 import { registerUser, RegisterView } from "./views/RegisterView.js";
 import { ProfileView, renderProfile } from "./views/ProfileView.js";
 import { initPostModal } from "./views/PostModalView.js";
-import { CreatePostView } from "./views/CreatePostView.js";
+import { createPost, CreatePostView } from "./views/CreatePostView.js";
 
 export function router() {
   const routes = {
@@ -35,7 +35,7 @@ export function router() {
       initPostModal();
       fetchAndShowPosts(1, "");
     }
-    // if(hash === "#/create")
+    if (hash === "#/create") createPost();
   }
 
   window.addEventListener("hashchange", handleRoute);
