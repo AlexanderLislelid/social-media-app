@@ -14,7 +14,7 @@ export function ProfileView() {
       
       <button id="logout"></button>
     </section>
-    
+
       <div id="posts" class="mt-20 flex flex-col gap-12 items-center"></div>
       
   `;
@@ -57,11 +57,17 @@ export async function renderProfile() {
       const contentWrapper = document.createElement("div");
       const title = document.createElement("h2");
       const body = document.createElement("p");
+      const buttonsWrapper = document.createElement("div");
       const deleteBtn = document.createElement("button");
+      const updateBtn = document.createElement("button");
 
       title.textContent = post.title;
       body.textContent = post.body;
       deleteBtn.textContent = "Delete post";
+      updateBtn.textContent = "Update Post";
+
+      deleteBtn.className = "p-2 bg-red-500 text-white rounded mr-4";
+      updateBtn.className = "p-2 bg-blue-500 text-white rounded";
 
       contentWrapper.append(title);
 
@@ -73,11 +79,16 @@ export async function renderProfile() {
       }
 
       contentWrapper.append(body);
-      postCard.append(contentWrapper, deleteBtn);
+      buttonsWrapper.append(deleteBtn, updateBtn);
+      postCard.append(contentWrapper, buttonsWrapper);
 
       deleteBtn.addEventListener("click", async () => {
         await del(`social/posts/${post.id}`);
         renderProfile();
+      });
+
+      updateBtn.addEventListener("click", async () => {
+        //-----add code for updating
       });
     });
 
