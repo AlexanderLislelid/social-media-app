@@ -9,24 +9,34 @@ export function ProfileView() {
       <div class="flex gap-2 mt-8">
         <p><span id="followers"></span></p>
         <p><span id="following"></span></p>
-        <p><span id="posts"></span></p>
+        <p><span id="number-of-posts"></span></p>
       </div>
+      
       <button id="logout"></button>
     </section>
+    <div id="posts-wrapper">
+      <div id="posts" class="mt-20 flex flex-col gap-12 items-center"></div>
+      </div>
   `;
 }
 
 export async function renderProfile() {
   const username = localStorage.getItem("username");
   const profileData = await get(`social/profiles/${username}`);
+  const postData = await get(
+    `social/profiles/${username}/posts?_author=true&_count=true`,
+  );
   const profile = profileData.data;
+  const posts = postData.data;
+  console.log(posts);
 
   const welcomeMsg = document.getElementById("profileWelcome");
   const avatar = document.getElementById("avatar");
   const followers = document.getElementById("followers");
   const following = document.getElementById("following");
-  const posts = document.getElementById("posts");
+  const numberOfPosts = document.getElementById("number-of-posts");
   const logoutBtn = document.getElementById("logout");
+  const postWrapper = document.getElementById("posts-wrapper");
 
   if (!loadToken()) {
     logoutBtn.style.display = "none";
@@ -38,7 +48,31 @@ export async function renderProfile() {
     avatar.alt = "Profile picture";
     followers.textContent = profile._count.followers;
     following.textContent = profile._count.following;
-    posts.textContent = profile._count.posts;
+    numberOfPosts.textContent = profile._count.posts;
+
+    posts.forEach((post) => {
+      const postCard = document.getElementById("posts");
+      const contentWrapper = document.createElement("div");
+      const title = document.createElement("h2");
+      const body = document.createElement("p");
+      const deleteBtn = document.createElement("button");
+
+      title.textContent = post.title;
+      body.textContent = post.body;
+      deleteBtn.textContent = "Delete post";
+
+      contentWrapper.append(title);
+
+      if (post.media?.url) {
+        const img = document.createElement("img");
+        img.src = post.media.url;
+        img.alt = "Post image";
+        contentWrapper.append(img);
+      }
+
+      contentWrapper.append(body);
+      postCard.append(contentWrapper, deleteBtn);
+    });
 
     logoutBtn.textContent = "Logout";
     logoutBtn.addEventListener("click", (e) => {
