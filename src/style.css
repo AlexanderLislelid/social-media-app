@@ -28,18 +28,6 @@
   border-radius: 12px;
 }
 
-.post-card p {
-  color: #94a3b8; /* slate-400 */
-  line-height: 1.4;
-}
-
-.post-textarea {
-  padding: 10px 16px;
-  border-radius: 12px;
-  background: #0f172a; /* slate-900 */
-  color: #e2e8f0; /* slate-200 */
-}
-
 .post-textarea {
   padding: 8px 16px;
   border-radius: 12px;

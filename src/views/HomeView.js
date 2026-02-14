@@ -40,12 +40,12 @@ export async function HomeView() {
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
         <div
-          class="modal-panel bg-slate-800 border border-slate-700 rounded-xl shadow-xl p-6 w-full max-w-2xl relative max-h-[80vh] overflow-y-auto text-slate-100"
+          class="modal-panel bg-slate-900 border border-slate-700 rounded-xl shadow-xl p-6 w-full max-w-2xl relative max-h-[80vh] overflow-y-auto text-slate-100"
         >
           <div class="flex justify-end">
             <button
               id="modal-close"
-              class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg hover:border-indigo-500 hover:text-indigo-300 transition-colors text-sm"
+              class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg hover:border-indigo-500 hover:text-indigo-300  text-sm"
             >
               Close
             </button>
@@ -108,7 +108,7 @@ export async function fetchAndShowPosts(page, search = "") {
       card.className = "post-card";
       date.className = "text-xs text-slate-400";
       body.className =
-        "post-textarea bg-slate-900 text-slate-100 border border-slate-700";
+        "post-textarea bg-slate-700 text-slate-100 border border-slate-800 shadow-md text-slate-100";
       header.className = "flex justify-between items-center text-slate-400";
       leftHeader.className = "flex items-center gap-2";
       avatarWrapper.className = "w-10 h-10 rounded-full overflow-hidden";
