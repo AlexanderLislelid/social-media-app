@@ -1,14 +1,14 @@
 import { loadToken, loadApiKey } from "../utils/storage.js";
-import { openPostModal } from "./PostModalView";
+import { openPostModal } from "./PostModalView.js";
 import { get } from "../api/apiClient.js";
 
 export async function HomeView() {
   if (loadToken() && loadApiKey()) {
     return /* HTML */ `
-      <section class="px-4 max-w-2xl mx-auto mt-6">
+      <section class="max-w-[500px] mx-auto mt-6">
         <form
           id="search-form"
-          class="bg-slate-800 border border-slate-700 rounded-xl shadow p-3 flex items-center gap-2"
+          class="bg-slate-800 border border-slate-700 rounded-xl shadow p-3 flex flex-col sm:flex-row sm:items-center gap-2""
         >
           <input
             type="search"
@@ -20,7 +20,7 @@ export async function HomeView() {
 
           <button
             type="submit"
-            class="bg-indigo-500 text-white px-3 py-2 text-sm rounded-lg hover:bg-indigo-600 transition-colors"
+            class="bg-indigo-500 text-white px-3 py-2 text-sm rounded-lg hover:bg-indigo-600 transition-colors w-full sm:w-auto"
           >
             Search
           </button>
@@ -108,7 +108,7 @@ export async function fetchAndShowPosts(page, search = "") {
       card.className = "post-card";
       date.className = "text-xs text-slate-400";
       body.className =
-        "post-textarea bg-slate-700 text-slate-100 border border-slate-800 shadow-md text-slate-100";
+        "post-textarea bg-slate-700 text-slate-100 border border-slate-800 shadow-md";
       header.className = "flex justify-between items-center text-slate-400";
       leftHeader.className = "flex items-center gap-2";
       avatarWrapper.className = "w-10 h-10 rounded-full overflow-hidden";
