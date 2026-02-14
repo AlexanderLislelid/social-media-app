@@ -5,24 +5,24 @@ import { get } from "../api/apiClient.js";
 export async function HomeView() {
   if (loadToken() && loadApiKey()) {
     return /* HTML */ `
-      <section class="px-4 md:max-w-4xl md:mx-auto">
+      <section class="px-4 max-w-2xl mx-auto mt-6">
         <form
           id="search-form"
-          class="bg-white rounded-lg shadow p-4 mb-6 flex flex-col md:flex-row gap-4"
+          class="bg-slate-800 border border-slate-700 rounded-xl shadow p-3 flex items-center gap-2"
         >
           <input
             type="search"
             name="search"
             id="search"
-            placeholder="Search for posts"
-            class="flex-1 border rounded px-3 py-2 h-10 resize-none"
+            placeholder="Search posts..."
+            class="flex-1 bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-400 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
           />
 
           <button
             type="submit"
-            class="shrink-0 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto"
+            class="bg-indigo-500 text-white px-3 py-2 text-sm rounded-lg hover:bg-indigo-600 transition-colors"
           >
-            Search posts
+            Search
           </button>
         </form>
       </section>
@@ -35,20 +35,23 @@ export async function HomeView() {
       </section>
       <div
         id="post-modal"
-        class="hidden fixed inset-0 items-start justify-center pt-24 z-50"
+        class="hidden fixed inset-0  items-start justify-center pt-24 z-50"
       >
-        <div class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
         <div
-          class="modal-panel bg-white rounded-xl shadow-xl p-4 w-full max-w-2xl relative max-h-[80vh] overflow-y-auto"
+          class="modal-panel bg-slate-800 border border-slate-700 rounded-xl shadow-xl p-6 w-full max-w-2xl relative max-h-[80vh] overflow-y-auto text-slate-100"
         >
           <div class="flex justify-end">
-            <button id="modal-close" class="bg-red-500 p-2 text-white rounded">
+            <button
+              id="modal-close"
+              class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg hover:border-indigo-500 hover:text-indigo-300 transition-colors text-sm"
+            >
               Close
             </button>
           </div>
 
-          <div id="post-modal-content"></div>
+          <div id="post-modal-content" class="mt-4"></div>
         </div>
       </div>
     `;
@@ -103,15 +106,17 @@ export async function fetchAndShowPosts(page, search = "") {
 
       card.style.cursor = "pointer";
       card.className = "post-card";
-      date.className = "text-xs text-gray-500";
-      body.className = "post-textarea bg-slate-200";
-      header.className = "flex justify-between items-center";
+      date.className = "text-xs text-slate-400";
+      body.className =
+        "post-textarea bg-slate-900 text-slate-100 border border-slate-700";
+      header.className = "flex justify-between items-center text-slate-400";
       leftHeader.className = "flex items-center gap-2";
       avatarWrapper.className = "w-10 h-10 rounded-full overflow-hidden";
-      commentCount.className = "text-sm ml-2 mt-2";
-      reactions.className = "text-sm";
+      commentCount.className = "text-sm text-slate-400 ml-2 mt-2";
+      reactions.className = "text-sm text-slate-400";
       bottomCard.className = "flex justify-between";
-      reactionsWrapper.className = "flex items-center gap-1 text-sm ml-2 mt-2";
+      reactionsWrapper.className =
+        "flex items-center gap-1 text-sm text-slate-400 ml-2 mt-2";
 
       const imageUrl = post.media?.url;
       if (imageUrl) {
@@ -133,7 +138,7 @@ export async function fetchAndShowPosts(page, search = "") {
       //icon from heroicons.com
       heartIcon.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-       stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-800">
+       stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-slate-400">
     <path stroke-linecap="round" stroke-linejoin="round"
       d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
   </svg>`;

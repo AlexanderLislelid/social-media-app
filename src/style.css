@@ -6,10 +6,10 @@
   max-width: 500px;
   margin: 16px auto;
   padding: 16px;
-  background: white;
-  border: 1px solid #e5e7eb;
+  background: #1e293b; /* slate-800 */
+
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -19,7 +19,7 @@
   font-size: 1.2rem;
   line-height: 1.25;
   font-weight: 700;
-  padding: 8px;
+  color: #f1f5f9; /* slate-100 */
 }
 
 .post-card img {
@@ -29,8 +29,15 @@
 }
 
 .post-card p {
-  color: #374151;
+  color: #94a3b8; /* slate-400 */
   line-height: 1.4;
+}
+
+.post-textarea {
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #0f172a; /* slate-900 */
+  color: #e2e8f0; /* slate-200 */
 }
 
 .post-textarea {
