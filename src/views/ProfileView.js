@@ -62,12 +62,14 @@ export async function renderProfile() {
       const updateTitle = document.createElement("input");
       const updateBody = document.createElement("input");
       const updateBtn = document.createElement("button");
+      const closeModal = document.createElement("button");
 
       title.textContent = post.title;
       body.textContent = post.body;
       deleteBtn.textContent = "Delete post";
       openModal.textContent = "Update Post";
       updateBtn.textContent = "Update..";
+      closeModal.textContent = "Close";
 
       deleteBtn.className = "p-2 bg-red-500 text-white rounded mr-4";
       openModal.className = "p-2 bg-blue-500 text-white rounded";
@@ -81,7 +83,7 @@ export async function renderProfile() {
         contentWrapper.append(img);
       }
 
-      modal.append(updateTitle, updateBody, updateBtn);
+      modal.append(updateTitle, updateBody, updateBtn, closeModal);
       contentWrapper.append(modal);
       contentWrapper.append(body);
       buttonsWrapper.append(deleteBtn, openModal);
@@ -92,7 +94,11 @@ export async function renderProfile() {
         renderProfile();
       });
 
-      openModal.addEventListener("click", async () => {
+      closeModal.addEventListener("click", () => {
+        modal.close();
+      });
+
+      openModal.addEventListener("click", () => {
         modal.showModal();
         updateBtn.addEventListener("click", async () => {
           await put(`social/posts/${post.id}`, {
