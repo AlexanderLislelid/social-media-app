@@ -42,10 +42,10 @@
     </div>
   </div>
 `}async function V(){if(k()&&_())return`
-      <section class="px-4 max-w-2xl mx-auto mt-6">
+      <section class="max-w-[500px] mx-auto mt-6">
         <form
           id="search-form"
-          class="bg-slate-800 border border-slate-700 rounded-xl shadow p-3 flex items-center gap-2"
+          class="bg-slate-800 border border-slate-700 rounded-xl shadow p-3 flex flex-col sm:flex-row sm:items-center gap-2""
         >
           <input
             type="search"
@@ -57,7 +57,7 @@
 
           <button
             type="submit"
-            class="bg-indigo-500 text-white px-3 py-2 text-sm rounded-lg hover:bg-indigo-600 transition-colors"
+            class="bg-indigo-500 text-white px-3 py-2 text-sm rounded-lg hover:bg-indigo-600 transition-colors w-full sm:w-auto"
           >
             Search
           </button>
@@ -91,7 +91,7 @@
           <div id="post-modal-content" class="mt-4"></div>
         </div>
       </div>
-    `;window.location.hash="#/login"}let y=1,S=!1,M="";async function A(t,o=""){const s=document.getElementById("posts"),a=document.getElementById("next-page-btn");if(!(!s||!a)){S=!0,a.textContent="Loading...",a.disabled=!0;try{let e=`social/posts?page=${t}&limit=10&_author=true&_count=true`;o&&(e=`social/posts/search?q=${encodeURIComponent(o)}&_author=true&_count=true`);const n=await N(e),r=n.data,m=n.meta;s.innerHTML="",r.forEach(l=>{const c=document.createElement("div"),d=document.createElement("h2"),p=document.createElement("p"),i=document.createElement("p"),f=document.createElement("div"),w=document.createElement("div"),E=document.createElement("div"),B=document.createElement("span"),g=document.createElement("div"),x=document.createElement("div"),u=document.createElement("p"),h=document.createElement("div"),I=document.createElement("span"),v=document.createElement("p");c.style.cursor="pointer",c.className="post-card",i.className="text-xs text-slate-400",p.className="post-textarea bg-slate-700 text-slate-100 border border-slate-800 shadow-md text-slate-100",w.className="flex justify-between items-center text-slate-400",E.className="flex items-center gap-2",g.className="w-10 h-10 rounded-full overflow-hidden",u.className="text-sm text-slate-400 ml-2 mt-2",v.className="text-sm text-slate-400",x.className="flex justify-between",h.className="flex items-center gap-1 text-sm text-slate-400 ml-2 mt-2";const L=l.media?.url;if(L){const b=document.createElement("img");b.src=L,b.alt="Post image",f.append(b)}const C=l.author?.avatar?.url;if(C){const b=document.createElement("img");b.src=C,b.alt=`${l.author.name} avatar`,b.className="w-10 h-10 rounded-full",g.append(b)}I.innerHTML=`
+    `;window.location.hash="#/login"}let y=1,S=!1,M="";async function A(t,o=""){const s=document.getElementById("posts"),a=document.getElementById("next-page-btn");if(!(!s||!a)){S=!0,a.textContent="Loading...",a.disabled=!0;try{let e=`social/posts?page=${t}&limit=10&_author=true&_count=true`;o&&(e=`social/posts/search?q=${encodeURIComponent(o)}&_author=true&_count=true`);const n=await N(e),r=n.data,m=n.meta;s.innerHTML="",r.forEach(l=>{const c=document.createElement("div"),d=document.createElement("h2"),p=document.createElement("p"),i=document.createElement("p"),f=document.createElement("div"),w=document.createElement("div"),E=document.createElement("div"),B=document.createElement("span"),g=document.createElement("div"),x=document.createElement("div"),u=document.createElement("p"),h=document.createElement("div"),I=document.createElement("span"),v=document.createElement("p");c.style.cursor="pointer",c.className="post-card",i.className="text-xs text-slate-400",p.className="post-textarea bg-slate-700 text-slate-100 border border-slate-800 shadow-md",w.className="flex justify-between items-center text-slate-400",E.className="flex items-center gap-2",g.className="w-10 h-10 rounded-full overflow-hidden",u.className="text-sm text-slate-400 ml-2 mt-2",v.className="text-sm text-slate-400",x.className="flex justify-between",h.className="flex items-center gap-1 text-sm text-slate-400 ml-2 mt-2";const L=l.media?.url;if(L){const b=document.createElement("img");b.src=L,b.alt="Post image",f.append(b)}const C=l.author?.avatar?.url;if(C){const b=document.createElement("img");b.src=C,b.alt=`${l.author.name} avatar`,b.className="w-10 h-10 rounded-full",g.append(b)}I.innerHTML=`
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
        stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-slate-400">
     <path stroke-linecap="round" stroke-linejoin="round"
