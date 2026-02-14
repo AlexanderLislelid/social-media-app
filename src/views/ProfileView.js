@@ -1,5 +1,5 @@
 import { loadToken, removeToken } from "../utils/storage.js";
-import { get, del } from "../api/apiClient.js";
+import { get, del, put } from "../api/apiClient.js";
 
 export function ProfileView() {
   return /* HTML */ `
@@ -11,7 +11,6 @@ export function ProfileView() {
         <p><span id="following"></span></p>
         <p><span id="number-of-posts"></span></p>
       </div>
-      
       <button id="logout"></button>
     </section>
 
@@ -53,21 +52,25 @@ export async function renderProfile() {
     postCard.innerHTML = "";
 
     posts.forEach((post) => {
-      const postCard = document.getElementById("posts");
       const contentWrapper = document.createElement("div");
       const title = document.createElement("h2");
       const body = document.createElement("p");
       const buttonsWrapper = document.createElement("div");
       const deleteBtn = document.createElement("button");
+      const openModal = document.createElement("button");
+      const modal = document.createElement("dialog");
+      const updateTitle = document.createElement("input");
+      const updateBody = document.createElement("input");
       const updateBtn = document.createElement("button");
 
       title.textContent = post.title;
       body.textContent = post.body;
       deleteBtn.textContent = "Delete post";
-      updateBtn.textContent = "Update Post";
+      openModal.textContent = "Update Post";
+      updateBtn.textContent = "Update..";
 
       deleteBtn.className = "p-2 bg-red-500 text-white rounded mr-4";
-      updateBtn.className = "p-2 bg-blue-500 text-white rounded";
+      openModal.className = "p-2 bg-blue-500 text-white rounded";
 
       contentWrapper.append(title);
 
@@ -78,8 +81,10 @@ export async function renderProfile() {
         contentWrapper.append(img);
       }
 
+      modal.append(updateTitle, updateBody, updateBtn);
+      contentWrapper.append(modal);
       contentWrapper.append(body);
-      buttonsWrapper.append(deleteBtn, updateBtn);
+      buttonsWrapper.append(deleteBtn, openModal);
       postCard.append(contentWrapper, buttonsWrapper);
 
       deleteBtn.addEventListener("click", async () => {
@@ -87,8 +92,15 @@ export async function renderProfile() {
         renderProfile();
       });
 
-      updateBtn.addEventListener("click", async () => {
-        //-----add code for updating
+      openModal.addEventListener("click", async () => {
+        modal.showModal();
+        updateBtn.addEventListener("click", async () => {
+          await put(`social/posts/${post.id}`, {
+            title: updateTitle.value,
+            body: updateBody.value,
+          });
+          renderProfile();
+        });
       });
     });
 
