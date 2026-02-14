@@ -1,4 +1,4 @@
-import { get } from "../api/apiClient.js";
+import { get, put } from "../api/apiClient.js";
 
 export function initPostModal() {
   const modal = document.getElementById("post-modal");
@@ -18,6 +18,7 @@ export function initPostModal() {
 export async function openPostModal(postId) {
   const modal = document.getElementById("post-modal");
   const content = document.getElementById("post-modal-content");
+  const followBtn = document.getElementById("follow-user-btn");
 
   modal.classList.remove("hidden");
   modal.classList.add("flex");
@@ -27,6 +28,18 @@ export async function openPostModal(postId) {
     `social/posts/${postId}?_author=true&_comments=true&_reactions=true`,
   );
   const post = result.data;
+
+  // note to self: add ability to unfollow user ( /social/profiles/<name>/unfollow )
+  followBtn.onclick = async () => {
+    try {
+      await put(`social/profiles/${post.author.name}/follow`);
+      followBtn.textContent = "Following";
+    } catch (error) {
+      alert(error.message);
+    }
+
+    followBtn.textContent = "Follow user";
+  };
 
   const date = new Date(post.created).toLocaleString("no-NO", {
     day: "2-digit",
