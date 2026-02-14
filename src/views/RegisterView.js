@@ -69,11 +69,17 @@ export function RegisterView() {
   `;
 }
 
-// const data = await post("auth/login", {
-//   email,
-//   password,
-// });
-
+/**
+ * Registers a new user
+ *
+ * retrieves values from the registerform ( name, email and password)
+ * on submit, sends retrieved values to the auth/register endpoint
+ * on success redirects to login page
+ * if registration request fails, the error message is shown in the UI
+ *
+ * @function registerUser
+ * @returns {void}
+ */
 export function registerUser() {
   const form = document.getElementById("registerForm");
   const name = document.getElementById("name");
