@@ -8,7 +8,7 @@ export async function HomeView() {
       <section class="max-w-[500px] mx-auto mt-6">
         <form
           id="search-form"
-          class="bg-slate-800 border border-slate-700 rounded-xl shadow p-3 flex flex-col sm:flex-row sm:items-center gap-2""
+          class="bg-slate-800 border border-slate-700 rounded-xl shadow p-3 flex flex-col sm:flex-row sm:items-center gap-2"
         >
           <input
             type="search"
@@ -42,7 +42,13 @@ export async function HomeView() {
         <div
           class="modal-panel bg-slate-900/80 border border-slate-700 rounded-xl shadow-xl p-6 w-full max-w-2xl relative max-h-[80vh] overflow-y-auto text-slate-100 backdrop-blur"
         >
-          <div class="flex justify-end">
+          <div class="flex justify-between">
+            <button
+              id="follow-user-btn"
+              class="bg-indigo-500 text-white px-3 py-2 text-sm rounded-lg hover:bg-indigo-600 transition-colors "
+            >
+              Follow user
+            </button>
             <button
               id="modal-close"
               class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg hover:border-indigo-500 hover:text-indigo-300  text-sm"
