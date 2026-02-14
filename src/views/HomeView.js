@@ -40,7 +40,7 @@ export async function HomeView() {
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
         <div
-          class="modal-panel bg-slate-900 border border-slate-700 rounded-xl shadow-xl p-6 w-full max-w-2xl relative max-h-[80vh] overflow-y-auto text-slate-100"
+          class="modal-panel bg-slate-900/80 border border-slate-700 rounded-xl shadow-xl p-6 w-full max-w-2xl relative max-h-[80vh] overflow-y-auto text-slate-100 backdrop-blur"
         >
           <div class="flex justify-end">
             <button

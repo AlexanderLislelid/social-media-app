@@ -32,3 +32,21 @@
   padding: 8px 16px;
   border-radius: 12px;
 }
+
+#prev-page-btn,
+#next-page-btn {
+  background: #1e293b; /* slate-800 */
+  color: #e2e8f0; /* slate-200 */
+  border: 1px solid #334155; /* slate-700 */
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#prev-page-btn:hover,
+#next-page-btn:hover {
+  border-color: #6366f1; /* indigo-500 */
+  color: #c7d2fe; /* indigo-200 */
+}
