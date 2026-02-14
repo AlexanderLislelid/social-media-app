@@ -63,6 +63,11 @@ export async function renderProfile() {
       const updateBody = document.createElement("input");
       const updateBtn = document.createElement("button");
       const closeModal = document.createElement("button");
+      const titleLabel = document.createElement("label");
+      const bodyLabel = document.createElement("label");
+
+      titleLabel.textContent = "Title";
+      bodyLabel.textContent = "Body";
 
       title.textContent = post.title;
       body.textContent = post.body;
@@ -83,7 +88,14 @@ export async function renderProfile() {
         contentWrapper.append(img);
       }
 
-      modal.append(updateTitle, updateBody, updateBtn, closeModal);
+      modal.append(
+        titleLabel,
+        updateTitle,
+        bodyLabel,
+        updateBody,
+        updateBtn,
+        closeModal,
+      );
       contentWrapper.append(modal);
       contentWrapper.append(body);
       buttonsWrapper.append(deleteBtn, openModal);
@@ -94,19 +106,24 @@ export async function renderProfile() {
         renderProfile();
       });
 
-      closeModal.addEventListener("click", () => {
-        modal.close();
+      openModal.addEventListener("click", () => {
+        updateTitle.value = post.title;
+        updateBody.value = post.body;
+        modal.showModal();
       });
 
-      openModal.addEventListener("click", () => {
-        modal.showModal();
-        updateBtn.addEventListener("click", async () => {
-          await put(`social/posts/${post.id}`, {
-            title: updateTitle.value,
-            body: updateBody.value,
-          });
-          renderProfile();
+      updateBtn.addEventListener("click", async () => {
+        await put(`social/posts/${post.id}`, {
+          title: updateTitle.value,
+          body: updateBody.value,
         });
+
+        modal.close();
+        renderProfile();
+      });
+
+      closeModal.addEventListener("click", () => {
+        modal.close();
       });
     });
 
