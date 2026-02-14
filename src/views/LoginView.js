@@ -9,39 +9,56 @@ import {
 export function LoginView() {
   return /* HTML */ `
     <section class="px-4 mt-12">
-      <div class="max-w-md mx-auto bg-white rounded-lg shadow p-6">
-        <h1 class="text-2xl font-bold text-gray-800 mb-4">Log in</h1>
+      <div
+        class="max-w-md mx-auto bg-slate-800 border border-slate-700 rounded-xl shadow p-6 space-y-6"
+      >
+        <h1 class="text-2xl font-bold text-slate-100 text-center">Log in</h1>
 
         <form id="loginForm" class="space-y-4">
-          <div>
-            <label for="email"> Email </label>
+          <div class="flex flex-col gap-1">
+            <label for="email" class="text-sm text-slate-300 ml-1">Email</label>
             <input
               id="email"
               type="email"
-              placeholder="your@email.com"
+              placeholder="your.name@stud.noroff.no"
               autocomplete="email"
               required
+              class="bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-400 rounded-lg px-3 py-2 text-sm outline-none focus:outline-none focus:border-indigo-500"
             />
           </div>
 
-          <div>
-            <label for="password"> Password </label>
+          <div class="flex flex-col gap-1">
+            <label for="password" class="text-sm text-slate-300 ml-1"
+              >Password</label
+            >
             <input
               id="password"
               type="password"
               placeholder="••••••••"
               autocomplete="current-password"
               required
+              class="bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-400 rounded-lg px-3 py-2 text-sm outline-none focus:outline-none focus:border-indigo-500"
             />
           </div>
 
-          <button type="submit">Log in</button>
-          <p id="loginError" class="text-red-500 text-sm hidden"></p>
+          <button
+            type="submit"
+            class="w-full bg-indigo-500 text-white px-3 py-2 text-sm rounded-lg hover:bg-indigo-600 font-medium"
+          >
+            Log in
+          </button>
+
+          <p id="loginError" class="text-red-400 text-sm hidden"></p>
         </form>
 
-        <p>
+        <p class="text-sm text-slate-400 text-center">
           Don't have an account?
-          <a href="#/register"> Register </a>
+          <a
+            href="#/register"
+            class="text-indigo-400 hover:text-indigo-300 font-medium "
+          >
+            Register
+          </a>
         </p>
       </div>
     </section>
