@@ -1,10 +1,5 @@
 import { post } from "../api/apiClient.js";
-import {
-  loadApiKey,
-  saveApiKey,
-  saveToken,
-  loadToken,
-} from "../utils/storage.js";
+import { loadApiKey, saveApiKey, saveToken } from "../utils/storage.js";
 
 export function LoginView() {
   return /* HTML */ `

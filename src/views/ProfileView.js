@@ -128,7 +128,7 @@ export async function renderProfile() {
     });
 
     logoutBtn.textContent = "Logout";
-    logoutBtn.addEventListener("click", (e) => {
+    logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("username");
       removeToken();
 
