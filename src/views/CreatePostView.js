@@ -18,7 +18,7 @@ export async function CreatePostView() {
           <input
             type="text"
             id="post-title"
-            class="bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-400 rounded-lg px-3 py-2 text-sm outline-none focus:outline-none focus:border-indigo-500"
+            class="bg-slate-900 border border-slate-700 text-slate-100 rounded-lg px-3 py-2 text-sm outline-none focus:outline-none focus:border-indigo-500"
           />
         </div>
         <div class="flex flex-col">
@@ -28,7 +28,7 @@ export async function CreatePostView() {
           <textarea
             id="post-content"
             rows="6"
-            class="bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-400 rounded-lg px-3 py-2 text-sm outline-none focus:outline-none focus:border-indigo-500"
+            class="bg-slate-900 border border-slate-700 text-slate-100 rounded-lg px-3 py-2 text-sm outline-none focus:outline-none focus:border-indigo-500"
           >
           </textarea>
         </div>
@@ -39,7 +39,7 @@ export async function CreatePostView() {
           <input
             type="text"
             id="post-media-url"
-            class="bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-400 rounded-lg px-3 py-2 text-sm outline-none focus:outline-none focus:border-indigo-500"
+            class="bg-slate-900 border border-slate-700 text-slate-100 rounded-lg px-3 py-2 text-sm outline-none focus:outline-none focus:border-indigo-500"
           />
         </div>
         <button
