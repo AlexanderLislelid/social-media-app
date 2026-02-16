@@ -1,4 +1,9 @@
 import { post } from "../api/apiClient.js";
+import {
+  isValidEmail,
+  isValidPassword,
+  isValidUsername,
+} from "../utils/validation.js";
 
 export function RegisterView() {
   return /* HTML */ `
@@ -8,14 +13,13 @@ export function RegisterView() {
       >
         <h1 class="text-2xl font-bold text-slate-100 text-center">Register</h1>
 
-        <form id="registerForm" class="space-y-4">
+        <form id="registerForm" novalidate class="space-y-4">
           <div class="flex flex-col gap-1">
             <label for="name" class="text-sm text-slate-300">Name</label>
             <input
               id="name"
               type="text"
               placeholder="your_username"
-              required
               class="bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-400 rounded-lg px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
             />
           </div>
@@ -26,7 +30,6 @@ export function RegisterView() {
               id="email"
               type="email"
               placeholder="your.name@stud.noroff.no"
-              required
               class="bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-400 rounded-lg px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
             />
           </div>
@@ -39,7 +42,6 @@ export function RegisterView() {
               id="password"
               type="password"
               placeholder="••••••••"
-              required
               class="bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-400 
               rounded-lg px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
             />
@@ -73,9 +75,11 @@ export function RegisterView() {
  * Registers a new user
  *
  * retrieves values from the registerform ( name, email and password)
- * on submit, sends retrieved values to the auth/register endpoint
+ * on submit, validates input and sends retrieved values to the auth/register endpoint
+ *
  * on success redirects to login page
- * if registration request fails, the error message is shown in the UI
+ * if validation fails, the error message is shown in the UI
+ * if the request fails, the API error message is shown in the UI
  *
  * @function registerUser
  * @returns {void}
@@ -93,11 +97,34 @@ export function registerUser() {
     errorMsg.classList.add("hidden");
     errorMsg.textContent = "";
 
+    const username = name.value.trim();
+    const userEmail = email.value.trim();
+    const userPassword = password.value;
+
+    if (!isValidUsername(username)) {
+      errorMsg.textContent =
+        "Name can only contain letters, numbers and underscore";
+      errorMsg.classList.remove("hidden");
+      return;
+    }
+
+    if (!isValidEmail(userEmail)) {
+      errorMsg.textContent = "Email must be a valid @stud.noroff.no address";
+      errorMsg.classList.remove("hidden");
+      return;
+    }
+
+    if (!isValidPassword(userPassword)) {
+      errorMsg.textContent = "The password must be at least 8 characters";
+      errorMsg.classList.remove("hidden");
+      return;
+    }
+
     try {
       await post("auth/register", {
-        name: name.value.trim(),
-        email: email.value.trim(),
-        password: password.value,
+        name: username,
+        email: userEmail,
+        password: userPassword,
       });
 
       window.location.hash = "#/login";
