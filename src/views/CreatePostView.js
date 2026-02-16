@@ -29,8 +29,7 @@ export async function CreatePostView() {
             id="post-content"
             rows="6"
             class="bg-slate-900 border border-slate-700 text-slate-100 rounded-lg px-3 py-2 text-sm outline-none focus:outline-none focus:border-indigo-500"
-          >
-          </textarea>
+          ></textarea>
         </div>
         <div class="flex flex-col">
           <label for="post-media-url" class="text-sm text-slate-300 ml-1 mb-1"
@@ -54,6 +53,19 @@ export async function CreatePostView() {
   window.location.hash = "#/login";
 }
 
+/**
+ * Creates a new post
+ *
+ * reads values from the create post form ( title, body, imageurl(optional))
+ * on submit, sends a POST request to the social/posts endpoint
+ *
+ * on success, redirects to the feed page "#/"
+ * if the request fails, the API error message is shown in an alert
+ *
+ *
+ * @function createPost
+ * @returns {void}
+ */
 export function createPost() {
   const form = document.getElementById("create-form");
   const titleInput = document.getElementById("post-title");
