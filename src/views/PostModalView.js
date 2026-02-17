@@ -34,11 +34,11 @@ export async function openPostModal(postId) {
     try {
       await put(`social/profiles/${post.author.name}/follow`);
       followBtn.textContent = "Following";
+      followBtn.disabled = true;
+      followBtn.classList.add = "cursor-not-allowed";
     } catch (error) {
       alert(error.message);
     }
-
-    followBtn.textContent = "Follow user";
   };
 
   const date = new Date(post.created).toLocaleString("no-NO", {
