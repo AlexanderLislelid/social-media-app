@@ -11,7 +11,11 @@ export function initPostModal() {
     document.getElementById("post-modal-content").innerHTML = "";
   }
 
-  //add function to close with escape later
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      close();
+    }
+  });
   closeBtn.onclick = close;
 }
 
