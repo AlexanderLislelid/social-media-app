@@ -1,15 +1,16 @@
 import { loadToken, removeToken } from "../utils/storage.js";
 import { get, del, put } from "../api/apiClient.js";
+import { userIcon, usersIcon, postIcon } from "../utils/icons.js";
 
 export function ProfileView() {
   return /* HTML */ `
-    <section class="flex flex-col items-center">
+    <section class="flex flex-col items-center max-w-md mx-auto bg-slate-800 border border-slate-700 rounded-xl shadow p-6 space-y-6 mt-16 text-slate-100 text-sm" >
       <img id="avatar" class="w-24 rounded-full mt-4 mb-8"></img>
       <h1 id="profileWelcome"></h1>
-      <div class="flex gap-2 mt-8">
-        <p><span id="followers"></span></p>
-        <p><span id="following"></span></p>
-        <p><span id="number-of-posts"></span></p>
+      <div class="mt-8 space-y-2">
+        <p id="followers"></p>
+        <p id="following"></p>
+        <p id="number-of-posts"></p>
       </div>
       <button id="logout"></button>
     </section>
@@ -43,10 +44,16 @@ export async function renderProfile() {
   if (loadToken()) {
     welcomeMsg.textContent = `Welcome back ${profile.name}`;
     avatar.src = profile.avatar.url;
-    avatar.alt = "Profile picture";
-    followers.textContent = profile._count.followers;
-    following.textContent = profile._count.following;
-    numberOfPosts.textContent = profile._count.posts;
+    avatar.alt = `${profile.name} avatar`;
+
+    followers.replaceChildren();
+    followers.append(userIcon(), ` Followers: ${profile._count.followers}`);
+
+    following.replaceChildren();
+    following.append(usersIcon(), ` Following: ${profile._count.following}`);
+
+    numberOfPosts.replaceChildren();
+    numberOfPosts.append(postIcon(), ` Posts: ${profile._count.posts}`);
 
     const postCard = document.getElementById("posts");
     postCard.innerHTML = "";
@@ -96,10 +103,12 @@ export async function renderProfile() {
         updateBtn,
         closeModal,
       );
+
       contentWrapper.append(modal);
       contentWrapper.append(body);
       buttonsWrapper.append(deleteBtn, openModal);
-      postCard.append(contentWrapper, buttonsWrapper);
+      contentWrapper.append(buttonsWrapper);
+      postCard.append(contentWrapper);
 
       deleteBtn.addEventListener("click", async () => {
         await del(`social/posts/${post.id}`);

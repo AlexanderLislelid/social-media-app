@@ -33,3 +33,7 @@ Use examples of get, post, put, delete (url: "https://v2.api.noroff.dev/";)
 
 - deleting a post
   await del(`social/posts/${postId}`);
+
+- Follow & Unfollow profile
+  await put(`/social/profiles/${username}$/follow`)
+  await put(`/social/profiles/${username}$/unfollow`)
