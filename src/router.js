@@ -10,6 +10,7 @@ import { registerUser, RegisterView } from "./views/RegisterView.js";
 import { ProfileView, renderProfile } from "./views/ProfileView.js";
 import { initPostModal } from "./views/PostModalView.js";
 import { createPost, CreatePostView } from "./views/CreatePostView.js";
+import { UserView } from "./views/UserView.js";
 
 export function router() {
   const routes = {
@@ -18,6 +19,7 @@ export function router() {
     "#/register": RegisterView,
     "#/profile": ProfileView,
     "#/create": CreatePostView,
+    "#/user": UserView,
   };
 
   async function handleRoute() {
