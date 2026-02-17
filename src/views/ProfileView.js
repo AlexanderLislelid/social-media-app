@@ -69,50 +69,88 @@ export async function renderProfile() {
     const deleteBtn = document.createElement("button");
     const openModal = document.createElement("button");
     const modal = document.createElement("dialog");
-    const updateTitle = document.createElement("input");
-    const updateBody = document.createElement("input");
-    const updateBtn = document.createElement("button");
-    const closeModal = document.createElement("button");
+    const modalInner = document.createElement("div");
     const titleLabel = document.createElement("label");
     const bodyLabel = document.createElement("label");
+    const updateTitle = document.createElement("input");
+    const updateBody = document.createElement("textarea");
+    const modalActions = document.createElement("div");
+    const updateBtn = document.createElement("button");
+    const closeModal = document.createElement("button");
 
     titleLabel.textContent = "Title";
     bodyLabel.textContent = "Body";
 
     title.textContent = post.title;
     body.textContent = post.body;
+
     deleteBtn.textContent = "Delete post";
     openModal.textContent = "Update Post";
-    updateBtn.textContent = "Update..";
+    updateBtn.textContent = "Update";
     closeModal.textContent = "Close";
 
-    deleteBtn.className = "p-2 bg-red-500 text-white rounded mr-4";
-    openModal.className = "p-2 bg-blue-500 text-white rounded";
+    // posts stylingf
+    contentWrapper.className =
+      "w-full max-w-md bg-slate-800 border border-slate-700 rounded-xl shadow p-5 space-y-4";
+    title.className = "text-lg font-semibold text-slate-100";
+    body.className = "text-slate-300";
+    buttonsWrapper.className = "flex gap-3 pt-2";
 
+    deleteBtn.className =
+      "px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium";
+    openModal.className =
+      "px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium";
+
+    // Modal styling
+    modal.className =
+      "bg-slate-900 text-slate-100 rounded-xl p-6 border border-slate-700 w-full max-w-md";
+    modalInner.className = "flex flex-col gap-4";
+
+    titleLabel.className = "text-sm text-slate-300";
+    bodyLabel.className = "text-sm text-slate-300";
+
+    updateTitle.className =
+      "w-full p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 ";
+    updateBody.className =
+      "w-full p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 ";
+    updateBody.rows = 4;
+    modalActions.className = "flex justify-end gap-2 pt-2";
+
+    updateBtn.className =
+      "px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium ";
+    closeModal.className =
+      "px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium ";
+
+    //build card
     contentWrapper.append(title);
 
     if (post.media?.url) {
       const img = document.createElement("img");
       img.src = post.media.url;
-      img.alt = "Post image";
+      img.alt = post.media.alt || "Post image";
+      img.className = "w-full rounded-lg border border-slate-700";
       contentWrapper.append(img);
     }
 
-    modal.append(
+    contentWrapper.append(body);
+
+    //build modal
+    modalActions.append(closeModal, updateBtn);
+    modalInner.append(
       titleLabel,
       updateTitle,
       bodyLabel,
       updateBody,
-      updateBtn,
-      closeModal,
+      modalActions,
     );
+    modal.replaceChildren(modalInner);
 
     contentWrapper.append(modal);
-    contentWrapper.append(body);
     buttonsWrapper.append(deleteBtn, openModal);
     contentWrapper.append(buttonsWrapper);
     postCard.append(contentWrapper);
 
+    //button functionality
     deleteBtn.addEventListener("click", async () => {
       const confirmed = confirm("Are you sure you want to delete this post?");
       if (!confirmed) return;
