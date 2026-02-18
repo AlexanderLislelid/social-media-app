@@ -8,8 +8,7 @@ export function UserView() {
       id="profile-page"
       class="flex flex-col items-center max-w-md mx-auto bg-slate-800 border border-slate-700 rounded-xl shadow p-6 space-y-6 mt-16 text-slate-100 text-sm"
     >
-      <div id="btn-container" class="w-full"></div>
-      <!-- w-full aligns button to the left apparently -->
+      <div id="btn-container" class="self-start w-full"></div>
       <h1 id="profileWelcome" class="font-semibold text-2xl text-center"></h1>
       <img id="avatar" class="w-24 h-24 rounded-full mt-4" />
       <div id="bio">
@@ -26,7 +25,13 @@ export function UserView() {
         </div>
       </div>
     </section>
-    <div id="posts" class="mt-20 flex flex-col gap-12 items-center"></div>
+    <section>
+      <h2
+        id="posts-heading"
+        class="my-6 text-slate-100 text-xl font-semibold"
+      ></h2>
+      <div id="posts" class="flex flex-col gap-12 items-start"></div>
+    </section>
   `;
 }
 /**
@@ -57,9 +62,16 @@ export async function renderUser(username) {
   const numOfPosts = document.getElementById("posts-num");
   const btnContainer = document.getElementById("btn-container");
   const followBtn = createButton("Follow");
+  const postsHeading = document.getElementById("posts-heading");
 
   avatar.src = user.avatar.url;
   welcome.textContent = `${user.name}'s Profile`;
+
+  if (user.posts.length > 0) {
+    postsHeading.textContent = `${user.name}'s Posts`;
+  } else {
+    postsHeading.textContent = `${user.name} has not made any posts yet`;
+  }
 
   if (user.bio === null) {
     bio.textContent = "This user has not updated their bio yet";
@@ -87,6 +99,7 @@ export async function renderUser(username) {
 
     title.className = "text-slate-100 text-lg";
     body.className = "text-slate-400 text-sm";
+    postCard.className = "bg-slate-800 p-4 rounded-lg shadow-md";
 
     postCard.append(title, body);
     postsWrapper.append(postCard);
