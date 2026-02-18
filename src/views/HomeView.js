@@ -1,7 +1,5 @@
 import { loadToken, loadApiKey } from "../utils/storage.js";
-import { openPostModal } from "./PostModalView.js";
 import { get } from "../api/apiClient.js";
-import { heartIcon, userIcon } from "../utils/icons.js";
 import { createPostCard } from "../components/PostCard.js";
 
 export async function HomeView() {
