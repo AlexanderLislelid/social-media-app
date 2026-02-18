@@ -1,4 +1,5 @@
 import { get, put } from "../api/apiClient.js";
+import { createButton } from "../components/Button.js";
 
 export function initPostModal() {
   const modal = document.getElementById("post-modal");
@@ -12,10 +13,9 @@ export function initPostModal() {
   }
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      close();
-    }
+    if (e.key === "Escape") close();
   });
+
   closeBtn.onclick = close;
 }
 
@@ -33,19 +33,19 @@ export async function openPostModal(postId) {
   );
   const post = result.data;
 
-  // note to self: add ability to unfollow user ( /social/profiles/<name>/unfollow )
+  // follow
   followBtn.onclick = async () => {
     try {
       await put(`social/profiles/${post.author.name}/follow`);
       followBtn.textContent = "Following";
       followBtn.disabled = true;
-      followBtn.classList.add = "cursor-not-allowed";
+      followBtn.classList.add("cursor-not-allowed");
     } catch (error) {
       alert(error.message);
     }
   };
 
-  const date = new Date(post.created).toLocaleString("no-NO", {
+  const dateStr = new Date(post.created).toLocaleString("no-NO", {
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
@@ -53,71 +53,96 @@ export async function openPostModal(postId) {
     minute: "2-digit",
   });
 
-  const posterAvatar = post.author?.avatar?.url
-    ? `<img 
-     class="w-14 h-14 rounded-full object-cover border border-slate-700" 
-     src="${post.author.avatar.url}" 
-     alt="post author's profile picture"
-   >`
-    : "";
+  const wrapper = document.createElement("div");
+  const header = document.createElement("div");
+  const leftHeader = document.createElement("div");
+  const authorName = document.createElement("p");
+  const title = document.createElement("h2");
+  const date = document.createElement("p");
+  const body = document.createElement("p");
 
-  const postTitle =
-    post.title &&
-    `<h2 class="text-lg font-semibold text-slate-100">${post.title}</h2>`;
+  wrapper.className =
+    "bg-slate-800 border border-slate-700 rounded-xl shadow-md p-4 w-full max-w-2xl mx-auto space-y-3 text-slate-100";
+  header.className = "flex justify-between items-center";
+  leftHeader.className = "flex items-center gap-2";
+  authorName.className = "font-semibold text-slate-100";
+  date.className = "text-xs text-slate-400";
+  title.className = "text-lg font-semibold text-slate-100";
+  body.className = "text-slate-300 leading-relaxed";
 
-  const postBody =
-    post.body && `<p class="text-slate-300 leading-relaxed">${post.body}</p>`;
+  authorName.textContent = post.author.name;
+  date.textContent = dateStr;
+  title.textContent = post.title;
+  body.textContent = post.body;
 
-  const comments =
-    post.comments
-      .map(
-        (comment) => `
-    <div class="border-t border-slate-700 pt-2 mt-4">
-      <div class="flex items-center gap-4 py-2">
-        <img
-          src="${comment.author.avatar.url}"
-          class="w-8 h-8 rounded-full border border-slate-700"
-          alt="${comment.author.name}'s avatar"
-        >
-        <p class="text-sm font-semibold text-slate-100">${comment.author.name}</p>
-      </div>
-      <p class="text-sm text-slate-300">${comment.body}</p>
-    </div>
-  `,
-      )
-      .join("") ||
-    "<p class='text-sm text-slate-400 border-t border-slate-700 pt-2 mt-4'>No comments yet</p>";
+  if (post.author?.avatar?.url) {
+    const avatar = document.createElement("img");
+    avatar.className =
+      "w-14 h-14 rounded-full object-cover border border-slate-700";
+    avatar.src = post.author.avatar.url;
+    avatar.alt = `${post.author.name}'s profile picture`;
+    leftHeader.append(avatar);
+  }
 
-  content.innerHTML = `
-  <div class="bg-slate-800 border border-slate-700 rounded-xl shadow-md p-4 w-full max-w-2xl mx-auto space-y-3 text-slate-100">
+  if (post.media?.url) {
+    const img = document.createElement("img");
+    img.className =
+      "w-full rounded-lg object-cover max-h-[500px] border border-slate-700";
+    img.src = post.media.url;
+    img.alt = post.media?.alt ?? "Post image";
+    wrapper.append(img);
+  }
 
-    <div class="flex justify-between items-center">
-      <div class="flex items-center gap-2">
-        ${posterAvatar}
-        <p class="font-semibold text-slate-100">
-          ${post.author.name}
-        </p>
-      </div>
+  const profileBtn = createButton("Profile", "close");
+  profileBtn.addEventListener("click", () => {
+    window.location.hash = `#/user/${post.author.name}`;
+  });
 
-      <p class="text-xs text-slate-400">${date}</p>
-    </div>
+  leftHeader.append(authorName, profileBtn);
+  wrapper.append(title);
+  header.append(leftHeader, date);
+  wrapper.append(body);
 
-    ${postTitle}
-    ${postBody}
+  //comments section
+  const commentsWrapper = document.createElement("div");
+  commentsWrapper.className = "mt-6 space-y-2";
 
-    ${
-      post.media?.url
-        ? `<img 
-            class="w-full rounded-lg object-cover max-h-[500px] border border-slate-700" 
-            src="${post.media.url}" 
-            alt="${post.media?.alt ?? "Post image"}"
-          >`
-        : ""
-    }
+  const comments = post.comments;
 
-    <div class="mt-6 space-y-2">
-      ${comments}
-    </div>
-  </div>
-`;
+  if (comments.length === 0) {
+    const empty = document.createElement("p");
+    empty.className =
+      "text-sm text-slate-400 border-t border-slate-700 pt-2 mt-4";
+    empty.textContent = "No comments yet";
+    commentsWrapper.append(empty);
+  } else {
+    comments.forEach((comment) => {
+      const commentBox = document.createElement("div");
+      const commentHeader = document.createElement("div");
+      const commenterAvatar = document.createElement("img");
+      const commentBody = document.createElement("p");
+      const commenterName = document.createElement("p");
+
+      commentBox.className = "border-t border-slate-700 pt-2 mt-4";
+      commentHeader.className = "flex items-center gap-4 py-2";
+      commenterName.className = "text-sm font-semibold text-slate-100";
+      commentBody.className = "text-sm text-slate-300";
+
+      commenterName.textContent = comment.author.name;
+      commentBody.textContent = comment.body;
+
+      commenterAvatar.className =
+        "w-8 h-8 rounded-full border border-slate-700";
+      commenterAvatar.src = comment.author.avatar.url;
+      commenterAvatar.alt = `${comment.author.name}'s profile picture`;
+
+      commentHeader.append(commenterAvatar, commenterName);
+      commentBox.append(commentHeader, commentBody);
+      commentsWrapper.append(commentBox);
+    });
+  }
+
+  wrapper.append(header);
+  wrapper.append(commentsWrapper);
+  content.append(wrapper);
 }
