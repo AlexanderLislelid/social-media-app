@@ -1,5 +1,6 @@
 import { get } from "../api/apiClient.js";
 import { userIcon, postIcon, usersIcon } from "../utils/icons.js";
+import { createButton } from "../components/Button.js";
 
 export function UserView() {
   return /* HTML */ `
@@ -7,19 +8,21 @@ export function UserView() {
       id="profile-page"
       class="flex flex-col items-center max-w-md mx-auto bg-slate-800 border border-slate-700 rounded-xl shadow p-6 space-y-6 mt-16 text-slate-100 text-sm"
     >
+      <div id="btn-container" class="w-full"></div>
+      <!-- w-full aligns button to the left apparently -->
       <h1 id="profileWelcome" class="font-semibold text-2xl text-center"></h1>
       <img id="avatar" class="w-24 h-24 rounded-full mt-4" />
       <div id="bio">
         <p id="user-bio"></p>
       </div>
       <div id="stats">
-        <div id="followers" class="flex items-center justify-center gap-2">
+        <div id="followers" class="flex gap-2">
           <p>Followers</p>
-          <span id="followers-number" class="flex items-center gap-1"></span>
+          <span id="followers-number" class="flex gap-1"></span>
         </div>
-        <div id="posts-num" class="flex items-center justify-center gap-2">
+        <div id="posts-num" class="flex gap-2">
           <p>Posts</p>
-          <span id="posts-number" class="flex items-center gap-1"></span>
+          <span id="posts-number" class="flex gap-1"></span>
         </div>
       </div>
     </section>
@@ -52,6 +55,8 @@ export async function renderUser(username) {
   const bio = document.getElementById("user-bio");
   const numOfFollowers = document.getElementById("followers-number");
   const numOfPosts = document.getElementById("posts-num");
+  const btnContainer = document.getElementById("btn-container");
+  const followBtn = createButton("Follow");
 
   avatar.src = user.avatar.url;
   welcome.textContent = `${user.name}'s Profile`;
@@ -62,6 +67,7 @@ export async function renderUser(username) {
     bio.textContent = user.bio;
   }
 
+  btnContainer.append(followBtn);
   numOfFollowers.append(usersIcon());
   numOfFollowers.append(user.followers.length);
 
@@ -76,10 +82,11 @@ export async function renderUser(username) {
     const title = document.createElement("h2");
     const body = document.createElement("p");
 
-    postCard.className = "post-card";
-
     title.textContent = post.title;
     body.textContent = post.body;
+
+    title.className = "text-slate-100 text-lg";
+    body.className = "text-slate-400 text-sm";
 
     postCard.append(title, body);
     postsWrapper.append(postCard);
