@@ -10,7 +10,7 @@ import { registerUser, RegisterView } from "./views/RegisterView.js";
 import { ProfileView, renderProfile } from "./views/ProfileView.js";
 import { initPostModal } from "./views/PostModalView.js";
 import { createPost, CreatePostView } from "./views/CreatePostView.js";
-import { UserView } from "./views/UserView.js";
+import { UserView, renderUser } from "./views/UserView.js";
 
 export function router() {
   const routes = {
@@ -24,21 +24,28 @@ export function router() {
 
   async function handleRoute() {
     const hash = window.location.hash || "#/";
-    const view = routes[hash] || NotfoundView;
+    const [_, route, param] = hash.split("/");
 
+    if (route === "user" && param) {
+      document.getElementById("app").innerHTML = UserView();
+      await renderUser(decodeURIComponent(param));
+      return;
+    }
+
+    const view = routes[hash] || NotfoundView;
     document.getElementById("app").innerHTML = await view();
 
     if (hash === "#/login") initLogin();
     if (hash === "#/profile") renderProfile();
     if (hash === "#/register") registerUser();
+    if (hash === "#/create") createPost();
+
     if (hash === "#/") {
       homeBtns();
       setupSearch();
       initPostModal();
       fetchAndShowPosts(1, "");
     }
-    if (hash === "#/create") createPost();
-    if (hash === "/#user") renderUser();
   }
 
   window.addEventListener("hashchange", handleRoute);
