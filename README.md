@@ -26,7 +26,7 @@ https://AlexanderLislelid.github.io/social-media-app/
 
 ## Tech Stack
 
-- JavaScript 
+- JavaScript
 - Vite
 - Tailwind CSS
 - Noroff Social API
@@ -37,12 +37,13 @@ https://AlexanderLislelid.github.io/social-media-app/
 ## Project Structure
 
 src/
-- api/ → API client and requests  
-- views/ → Page views  
-- components/ → Reusable UI components  
-- utils/ → Storage and helpers  
-- router.js → SPA routing  
-- main.js → App entry point  
+
+- api/ → API client and requests
+- views/ → Page views
+- components/ → Reusable UI components
+- utils/ → Storage and helpers
+- router.js → SPA routing
+- main.js → App entry point
 
 ---
 
@@ -93,10 +94,12 @@ This project demonstrates:
 AI was used as a learning and support tool
 
 Examples of usage:
+
 - Explaining JavaScript concepts such as optional chaining and destructuring
 - Discussing safe handling of API responses (e.g. HTTP 204 responses)
 - Brainstorming structure and documentation improvements
-
+- How to handle dynamic routes like #/user/<username> in a simple hash router?
+  The implementation was written and adapted manually to match the existing router and views. (18.02)
 
 ---
 
