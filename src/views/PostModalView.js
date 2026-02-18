@@ -93,7 +93,7 @@ export async function openPostModal(postId) {
     wrapper.append(img);
   }
 
-  const profileBtn = createButton("Profile", "close");
+  const profileBtn = createButton("Profile", "profile");
   profileBtn.addEventListener("click", () => {
     window.location.hash = `#/user/${post.author.name}`;
   });

@@ -23,6 +23,8 @@ export function createButton(text = "button", variant = "primary") {
       " bg-slate-900 hover:bg-slate-950 border border-slate-600 text-white font-medium",
     close:
       "bg-slate-900 border border-slate-700  hover:border-indigo-500 hover:text-indigo-300",
+    profile:
+      "bg-slate-900 border border-slate-700  hover:border-indigo-500 hover:text-indigo-300 px-2 py-1",
   };
 
   button.className = `${base} ${variants[variant]}`.trim();
