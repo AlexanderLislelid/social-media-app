@@ -38,6 +38,7 @@ export function router() {
       fetchAndShowPosts(1, "");
     }
     if (hash === "#/create") createPost();
+    if (hash === "/#user") renderUser();
   }
 
   window.addEventListener("hashchange", handleRoute);
