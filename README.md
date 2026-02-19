@@ -87,22 +87,6 @@ This project demonstrates:
 - DOM manipulation
 - Pagination and UI state handling
 
----
-
-## AI Usage Log
-
-AI was used as a learning and support tool
-
-Examples of usage:
-
-- Explaining JavaScript concepts such as optional chaining and destructuring
-- Discussing safe handling of API responses (e.g. HTTP 204 responses)
-- Brainstorming structure and documentation improvements
-- How to handle dynamic routes like #/user/<username> in a simple hash router?
-  The implementation was written and adapted manually to match the existing router and views. (18.02)
-
----
-
 ## Author
 
 Alexander Lislelid  
