@@ -10,18 +10,17 @@ export function UserView() {
       class="flex flex-col items-center max-w-md mx-auto bg-slate-800 border border-slate-700 rounded-xl shadow p-6 space-y-6 mt-16 text-slate-100 text-sm"
     >
       <div id="btn-container" class="self-start w-full"></div>
-      <h1 id="profileWelcome" class="font-semibold text-2xl text-center"></h1>
+      <h1 id="profileWelcome" class="font-semibold text-3xl text-center"></h1>
+      <p id="user-email" class="!mt-0 text-slate-300"></p>
       <img id="avatar" class="w-24 h-24 rounded-full mt-4" />
       <div id="bio">
-        <p id="user-bio"></p>
+        <p id="user-bio" class="text-slate-300 "></p>
       </div>
-      <div id="stats">
-        <div id="followers" class="flex gap-2">
-          <p>Followers</p>
-          <span id="followers-number" class="flex gap-1"></span>
+      <div id="stats" class="flex w-full border-t-slate-500 border-t-2 ">
+        <div id="followers" class="p-2 mt-2">
+          <span id="followers-number" class="flex gap-1 text-white"></span>
         </div>
-        <div id="posts-num" class="flex gap-2">
-          <p>Posts</p>
+        <div id="posts-num" class="p-2 mt-2">
           <span id="posts-number" class="flex gap-1"></span>
         </div>
       </div>
@@ -64,6 +63,7 @@ export async function renderUser(username) {
   const btnContainer = document.getElementById("btn-container");
   const followBtn = createButton("Follow");
   const postsHeading = document.getElementById("posts-heading");
+  const userEmail = document.getElementById("user-email");
 
   // Follow button
   const currentUser = localStorage.getItem("username");
@@ -99,6 +99,7 @@ export async function renderUser(username) {
 
   avatar.src = user.avatar.url;
   welcome.textContent = `${user.name}'s Profile`;
+  userEmail.textContent = `@${user.email}`;
 
   if (user.posts.length > 0) {
     postsHeading.textContent = `${user.name}'s Posts`;
