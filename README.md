@@ -21,6 +21,7 @@ https://AlexanderLislelid.github.io/social-media-app/
 - Follow users
 - Profile page
 - Pagination and search
+- View user profiles
 
 ---
 
@@ -75,17 +76,7 @@ npm run deploy
 
 ---
 
-## Learning Goals
 
-This project demonstrates:
-
-- Modular JavaScript structure
-- Fetching and handling API data
-- Authentication and token storage
-- Error handling
-- SPA routing
-- DOM manipulation
-- Pagination and UI state handling
 
 ## Author
 
