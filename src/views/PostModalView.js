@@ -22,7 +22,7 @@ export function initPostModal() {
 export async function openPostModal(postId) {
   const modal = document.getElementById("post-modal");
   const content = document.getElementById("post-modal-content");
-  const followBtn = document.getElementById("follow-user-btn");
+  const btnWrapper = document.getElementById("btn-wrapper");
 
   modal.classList.remove("hidden");
   modal.classList.add("flex");
@@ -32,18 +32,6 @@ export async function openPostModal(postId) {
     `social/posts/${postId}?_author=true&_comments=true&_reactions=true`,
   );
   const post = result.data;
-
-  // follow
-  followBtn.onclick = async () => {
-    try {
-      await put(`social/profiles/${post.author.name}/follow`);
-      followBtn.textContent = "Following";
-      followBtn.disabled = true;
-      followBtn.classList.add("cursor-not-allowed");
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   const dateStr = new Date(post.created).toLocaleString("no-NO", {
     day: "2-digit",
@@ -93,14 +81,15 @@ export async function openPostModal(postId) {
     wrapper.append(img);
   }
 
-  const profileBtn = createButton("Profile", "profile");
+  const profileBtn = createButton("View Profile", "primary");
   profileBtn.addEventListener("click", () => {
     window.location.hash = `#/user/${post.author.name}`;
   });
 
-  leftHeader.append(authorName, profileBtn);
-  wrapper.append(title);
+  btnWrapper.append(profileBtn);
   header.append(leftHeader, date);
+  wrapper.append(header);
+  wrapper.append(title);
   wrapper.append(body);
 
   //comments section
