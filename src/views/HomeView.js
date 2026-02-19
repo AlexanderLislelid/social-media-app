@@ -26,26 +26,31 @@ export async function HomeView() {
           </button>
         </form>
       </section>
+
       <section id="feed">
         <div id="posts"></div>
+
         <div class="flex justify-between mt-12">
           <button id="prev-page-btn">Previous page</button>
           <button id="next-page-btn">Next page</button>
         </div>
       </section>
+
       <div
         id="post-modal"
-        class="hidden fixed inset-0  items-start justify-center pt-24 z-50"
+        class="hidden fixed inset-0 items-start justify-center pt-24 z-50"
       >
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
 
         <div
           class="modal-panel bg-slate-900/80 border border-slate-700 rounded-xl shadow-xl p-6 w-full max-w-2xl relative max-h-[80vh] overflow-y-auto text-slate-100 backdrop-blur"
         >
-          <div class="flex justify-between flex-row-reverse" id="btn-wrapper">
+          <div class="flex justify-between items-center mb-4">
+            <div id="btn-wrapper" class="flex gap-2"></div>
+
             <button
               id="modal-close"
-              class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg hover:border-indigo-500 hover:text-indigo-300  text-sm"
+              class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg hover:border-indigo-500 hover:text-indigo-300 text-sm"
             >
               Close
             </button>

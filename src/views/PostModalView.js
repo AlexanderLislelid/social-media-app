@@ -1,4 +1,4 @@
-import { get, put } from "../api/apiClient.js";
+import { get } from "../api/apiClient.js";
 import { createButton } from "../components/Button.js";
 
 export function initPostModal() {
@@ -23,6 +23,7 @@ export async function openPostModal(postId) {
   const modal = document.getElementById("post-modal");
   const content = document.getElementById("post-modal-content");
   const btnWrapper = document.getElementById("btn-wrapper");
+  btnWrapper.innerHTML = "";
 
   modal.classList.remove("hidden");
   modal.classList.add("flex");
@@ -131,7 +132,6 @@ export async function openPostModal(postId) {
     });
   }
 
-  wrapper.append(header);
   wrapper.append(commentsWrapper);
   content.append(wrapper);
 }
