@@ -1,6 +1,7 @@
-import { get } from "../api/apiClient.js";
+import { get, put } from "../api/apiClient.js";
 import { userIcon, postIcon, usersIcon } from "../utils/icons.js";
 import { createButton } from "../components/Button.js";
+import { loadToken } from "../utils/storage.js";
 
 export function UserView() {
   return /* HTML */ `
@@ -59,10 +60,42 @@ export async function renderUser(username) {
   const welcome = document.getElementById("profileWelcome");
   const bio = document.getElementById("user-bio");
   const numOfFollowers = document.getElementById("followers-number");
-  const numOfPosts = document.getElementById("posts-num");
+  const numOfPosts = document.getElementById("posts-number");
   const btnContainer = document.getElementById("btn-container");
   const followBtn = createButton("Follow");
   const postsHeading = document.getElementById("posts-heading");
+
+  // Follow button
+  const currentUser = localStorage.getItem("username");
+  let isFollowing = user.followers.some(
+    (followers) => followers.name === currentUser,
+  );
+
+  updateButton();
+
+  btnContainer.append(followBtn);
+
+  function updateButton() {
+    if (!isFollowing) {
+      followBtn.textContent = "Follow";
+    } else {
+      followBtn.textContent = "Unfollow";
+    }
+  }
+  followBtn.onclick = async () => {
+    try {
+      if (isFollowing) {
+        await put(`social/profiles/${user.name}/unfollow`);
+        isFollowing = false;
+      } else {
+        await put(`social/profiles/${user.name}/follow`);
+        isFollowing = true;
+      }
+      updateButton();
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   avatar.src = user.avatar.url;
   welcome.textContent = `${user.name}'s Profile`;
@@ -88,20 +121,25 @@ export async function renderUser(username) {
 
   const postsWrapper = document.getElementById("posts");
 
+  console.log(user);
   //user posts rendering
   user.posts.forEach((post) => {
     const postCard = document.createElement("div");
     const title = document.createElement("h2");
     const body = document.createElement("p");
+    const image = document.createElement("img");
 
     title.textContent = post.title;
     body.textContent = post.body;
+    image.src = post.media.url;
+    image.alt = post.media.alt;
 
-    title.className = "text-slate-100 text-lg";
-    body.className = "text-slate-400 text-sm";
+    title.className = "text-slate-100 text-lg mb-2";
+    body.className = "text-slate-400 text-sm mb-4";
     postCard.className = "bg-slate-800 p-4 rounded-lg shadow-md";
+    image.className = "rounded-lg";
 
-    postCard.append(title, body);
+    postCard.append(title, body, image);
     postsWrapper.append(postCard);
   });
 }
