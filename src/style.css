@@ -62,3 +62,10 @@ dialog[open] {
 dialog::backdrop {
   background: rgba(0, 0, 0, 0.6);
 }
+
+/* Media Queries*/
+@media (max-width: 640px) {
+  #logo-and-brand {
+    display: none;
+  }
+}
