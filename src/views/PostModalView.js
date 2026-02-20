@@ -83,7 +83,11 @@ export async function openPostModal(postId) {
   }
 
   const profileBtn = createButton("View Profile", "primary");
+
   profileBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+    document.body.classList.remove("overflow-hidden");
     window.location.hash = `#/user/${post.author.name}`;
   });
 
