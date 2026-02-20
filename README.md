@@ -64,18 +64,6 @@ npm run dev
 
 ---
 
-## Build for Production
-
-npm run build
-
----
-
-## Deploy to GitHub Pages
-
-npm run deploy
-
----
-
 ## Author
 
 Alexander Lislelid  

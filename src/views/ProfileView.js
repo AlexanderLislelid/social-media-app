@@ -40,7 +40,6 @@ export async function renderProfile() {
   const profile = profileData.data;
   const posts = postData.data;
   postCard.innerHTML = "";
-  console.log(posts);
 
   const welcomeMsg = document.getElementById("profileWelcome");
   const avatar = document.getElementById("avatar");
