@@ -18,7 +18,7 @@ https://AlexanderLislelid.github.io/social-media-app/
 - Edit posts
 - Delete posts
 - View posts from other users
-- Follow users
+- Follow / Unfollow users
 - Profile page
 - Pagination and search
 - View user profiles
@@ -75,8 +75,6 @@ npm run build
 npm run deploy
 
 ---
-
-
 
 ## Author
 

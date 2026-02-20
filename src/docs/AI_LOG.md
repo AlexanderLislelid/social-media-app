@@ -1,36 +1,90 @@
 ## AI Usage Log
 
-AI was used as a learning and support tool.
-All implementation was understood, adapted and written manually
-
 Usage and dates:
 
 ## 11.02
 
-Guidance on deploying a Vite project to github pages.
-Explanation of throw new Error()
+Prompt:
+Asked for guidance on deploying a Vite project to GitHub Pages.
+
+Context:
+My project is built with Vite and I was unsure how GitHub Pages works with the dist folder and how to update the site after new changes.
+
+Outcome:
+Set up a working deploy flow using vite build and deploying the dist folder to GitHub Pages.
+Learned that I need to rebuild and redeploy when I push new changes.
+
+---
+
+Prompt:
+Asked for an explanation of throw new Error() in JavaScript.
+
+Context:
+I saw it used inside async functions and API handling but was unsure what it actually does and how it affects the flow of the program.
+
+Outcome:
+Understood that throw new Error() stops execution in the current function and sends the error to the nearest catch block.
+Learned how it is used for handling failed API requests and invalid responses.
 
 ## 12.02
 
-Explanation of object destructuring.
-Debugging 401 errors related to missing API key headers.
-Discussing safe handling of API responses (e.g. HTTP 204 responses)
+Prompt:
+Asked about safe handling of API responses, especially HTTP 204 responses.
+
+Context:
+Some requests (like DELETE) were returning 204 and my code was breaking when calling response.json().
+I did not understand why it failed even though the request was successful.
+
+Outcome:
+Understood that HTTP 204 means the request was successful but returns no content.
+Learned that calling response.json() on a 204 response causes an error because there is no body to parse.
+Updated my API handling to avoid calling response.json() when the response has no content.
+
+---
+
+Prompt:
+Asked for an explanation of the ternary operator in JavaScript.
+
+Context:
+I saw it used as a shorter way of writing simple if/else statements
+
+Outcome:
+Understood how the ternary operator works, but rarely used it since I am more comfortable writing regular if/else statements.
 
 ## 13.02
 
-Guidance on structuring modal logic and separating responsibilities between files.
+Prompt:
+Asked for guidance on structuring my modal logic.
+
+Outcome:
+Got a cleaner modal setup with a clear open/close flow and less messy code in the view file.
 
 ## 14.02
 
-Feedback on repository structure.
+Prompt:
+Asked AI to review my file and folder structure and show examples of best practices for organizing a small SPA project.
+
+Outcome:
+Made small adjustments to file and folder structure
 
 ## 15.02
 
-Brainstorming structure and documentation improvements.
+Prompt:
+Asked for a basic JSDoc template example
+
+Outcome:
+Saw a simple JSDoc template showing how to document parameters, return values and a short description above a function.
+Used it as a reference when writing JSDoc comments for my own functions.
 
 ## 18.02
 
-How to handle dynamic routes like #/user/<username> in a simple hash router
+Prompt:
+Asked how to handle dynamic routes like #/user/<username> in my simple hash router.
+I wanted the router to understand the username from the URL and render the correct user profile.
+
+Outcome:
+Added logic to check if the hash starts with #/user/, extract the username from the URL, and pass it into my renderUser function.
+This made it possible to navigate to user profiles from posts
 
 ## 19.02
 
