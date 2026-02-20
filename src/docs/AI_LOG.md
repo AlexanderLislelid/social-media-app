@@ -125,3 +125,14 @@ The page rendered correctly, but scrolling no longer worked.
 Outcome:
 The issue was caused by adding the overflow-hidden class to document.body when opening the post modal, but not removing it when navigating away using the newly created “View Profile” button
 The fix was to remove the overflow-hidden class before updating the route.
+
+---
+
+Prompt:
+Create a simple logo for a social media website.
+
+Context:
+I wanted a simple and clean logo to use in the navbar that matched the minimal style of the application.
+
+Outcome:
+Recieved a logo and adjusted the size.
