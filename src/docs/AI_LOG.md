@@ -1,5 +1,8 @@
 ## AI Usage Log
 
+AI tool used:
+ChatGPT
+
 Usage and dates:
 
 ## 11.02
@@ -56,13 +59,22 @@ Understood how the ternary operator works, but rarely used it since I am more co
 Prompt:
 Asked for guidance on structuring my modal logic.
 
+Context:
+My modal code was becoming messy
+
 Outcome:
 Got a cleaner modal setup with a clear open/close flow and less messy code in the view file.
+
+(note: Discovered later that <dialog> could be used, which made it easier to make modals in the future
+https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog)
 
 ## 14.02
 
 Prompt:
 Asked AI to review my file and folder structure and show examples of best practices for organizing a small SPA project.
+
+Context:
+I wanted to know how to create a well structured project
 
 Outcome:
 Made small adjustments to file and folder structure
@@ -76,19 +88,32 @@ Outcome:
 Saw a simple JSDoc template showing how to document parameters, return values and a short description above a function.
 Used it as a reference when writing JSDoc comments for my own functions.
 
+## 16.02
+
+Prompt:
+Asked for regex examples for validating form inputs.
+
+Context:
+I needed simple validation rules for my register/login forms.
+
+Outcome:
+Got regex examples I could use for basic input validation.
+
 ## 18.02
 
 Prompt:
 Asked how to handle dynamic routes like #/user/<username> in my simple hash router.
 I wanted the router to understand the username from the URL and render the correct user profile.
 
+Context:
+My router only matched exact routes like #/login and #/profile.
+When navigating to #/user/username, the full URL did not match any key in my routes object.
+
 Outcome:
 Added logic to check if the hash starts with #/user/, extract the username from the URL, and pass it into my renderUser function.
 This made it possible to navigate to user profiles from posts
 
-## 19.02
-
-## 20.02.2026 – Debugging scroll issue after modal navigation
+## 20.02
 
 Prompt:
 Help me debug an issue that occurred when navigating to a user’s profile from the updated post modal. After clicking “View Profile”, scrolling was disabled on the next page.
