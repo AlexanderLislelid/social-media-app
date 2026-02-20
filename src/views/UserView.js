@@ -1,7 +1,6 @@
 import { get, put } from "../api/apiClient.js";
-import { userIcon, postIcon, usersIcon } from "../utils/icons.js";
+import { postIcon, usersIcon } from "../utils/icons.js";
 import { createButton } from "../components/Button.js";
-import { loadToken } from "../utils/storage.js";
 
 export function UserView() {
   return /* HTML */ `
@@ -25,7 +24,7 @@ export function UserView() {
         </div>
       </div>
     </section>
-    <section>
+    <section class="max-w-2xl mx-auto">
       <h2
         id="posts-heading"
         class="my-6 text-slate-100 text-xl font-semibold"
@@ -122,9 +121,9 @@ export async function renderUser(username) {
 
   const postsWrapper = document.getElementById("posts");
 
-  console.log(user);
   //user posts rendering
   user.posts.forEach((post) => {
+    console.log(post);
     const postCard = document.createElement("div");
     const title = document.createElement("h2");
     const body = document.createElement("p");
@@ -132,8 +131,8 @@ export async function renderUser(username) {
 
     title.textContent = post.title;
     body.textContent = post.body;
-    image.src = post.media.url;
-    image.alt = post.media.alt;
+    image.src = post.media?.url || "";
+    image.alt = post.media?.alt || "";
 
     title.className = "text-slate-100 text-lg mb-2";
     body.className = "text-slate-400 text-sm mb-4";
