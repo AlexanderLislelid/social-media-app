@@ -144,4 +144,12 @@ export function setupSearch() {
     fetchAndShowPosts(currentPage, currentSearch);
     window.scrollTo(0, 0);
   });
+
+  input.addEventListener("input", () => {
+    if (input.value === "") {
+      currentSearch = "";
+      currentPage = 1;
+      fetchAndShowPosts(currentPage, currentSearch);
+    }
+  });
 }
