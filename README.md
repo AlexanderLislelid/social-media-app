@@ -11,6 +11,12 @@ https://AlexanderLislelid.github.io/social-media-app/
 
 ---
 
+## Preview
+
+![App Preview](./src/assets/preview.png)
+
+---
+
 ## Features
 
 - Register and login
@@ -27,24 +33,44 @@ https://AlexanderLislelid.github.io/social-media-app/
 
 ## Tech Stack
 
-- JavaScript
-- Vite
-- Tailwind CSS
-- Noroff Social API
-- GitHub Pages (deployment)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?logo=javascript)
+![Vite](https://img.shields.io/badge/Vite-Frontend-purple?logo=vite)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-UtilityCSS-blue?logo=tailwindcss)
+![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-black?logo=github)
 
 ---
 
 ## Project Structure
 
 src/
-
-- api/ → API client and requests
-- views/ → Page views
-- components/ → Reusable UI components
-- utils/ → Storage and helpers
-- router.js → SPA routing
-- main.js → App entry point
+│
+├── api/
+│ └── apiClient.js
+│
+├── components/
+│ ├── Button.js
+│ └── PostCard.js
+│
+├── views/
+│ ├── HomeView.js
+│ ├── LoginView.js
+│ ├── RegisterView.js
+│ ├── ProfileView.js
+│ ├── CreatePostView.js
+│ ├── PostModalView.js
+│ ├── UserView.js
+│ └── NotFoundView.js
+│
+├── utils/
+│ ├── storage.js
+│ ├── validation.js
+│ └── icons.js
+│
+├── assets/
+│ └── logo files
+│
+├── router.js
+└── main.js
 
 ---
 
