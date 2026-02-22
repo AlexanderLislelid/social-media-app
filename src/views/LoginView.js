@@ -60,7 +60,21 @@ export function LoginView() {
   `;
 }
 
-//JSDOC this function? user login (sends email and password -> saves token -> checks if there is an api key, if not -> create api key and add to localstorage -> Sets username to localstorage -> router adds function after DOMcontent is loaded)
+/**
+ * Initializes the login form.
+ *
+ * Handles form submission by:
+ * Sending email and password to the API
+ * Saving the access token to localStorage
+ * Creating and saving an API key if one does not exist
+ * Saving the username to localStorage
+ * Redirecting the user to the home route
+ *
+ * Displays an error message if login fails.
+ *
+ * @function initLogin
+ * @returns {void}
+ */
 export function initLogin() {
   const form = document.getElementById("loginForm");
   const email = document.getElementById("email");

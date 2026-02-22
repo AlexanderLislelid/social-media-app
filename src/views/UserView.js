@@ -123,7 +123,6 @@ export async function renderUser(username) {
 
   //user posts rendering
   user.posts.forEach((post) => {
-    console.log(post);
     const postCard = document.createElement("div");
     const title = document.createElement("h2");
     const body = document.createElement("p");

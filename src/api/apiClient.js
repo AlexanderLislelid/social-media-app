@@ -3,6 +3,19 @@ import { loadApiKey, loadToken } from "../utils/storage.js";
 const BASE_URL = "https://v2.api.noroff.dev/";
 
 // API client adapted from the JS2 Module 2.2 example (advanced fetch request configuration)
+
+/**
+ * Sends a request to the Noroff API.
+ * Adds API key and access token automatically if they exist.
+ *
+ * @param {string} endpoint The API endpoint after BASE_URL
+ * @param {Object} [options] Optional fetch settings
+ * @param {Object} [options.body]  Data to send in the request
+ * @param {string} [options.method]  HTTP method (GET, POST, PUT, DELETE)
+ *
+ * @returns {Promise<Object>} The API response as JSON
+ * @throws {Error} If the request fails
+ */
 async function apiClient(endpoint, options = {}) {
   const { body, ...customOptions } = options;
 
